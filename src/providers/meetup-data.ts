@@ -47,7 +47,7 @@ export class MeetupData {
 
   constructor(public http: Http, public jsonp: Jsonp) { }
 
-  get(endpoint: string, params?: any, options?: RequestOptions) {
+  get(endpoint: string, params?: any, jsonp: boolean = true, options?: RequestOptions) {
     if (!options) {
       options = new RequestOptions();
     }
@@ -60,7 +60,7 @@ export class MeetupData {
       }
 
       // Needed params to make the request
-      p.set('key'   , this.apiKey);
+      p.set('key' , this.apiKey);
 
       // For jsonp calls so we don't have cors issues
       p.set('callback', 'JSONP_CALLBACK');
@@ -70,7 +70,8 @@ export class MeetupData {
       options.search = !options.search && p || options.search;
     }
 
-    return this.jsonp.request(endpoint, options).map(res => res.json());
+    return jsonp ? this.jsonp.request(endpoint, options).map(res => res.json())
+                 : this.http.get("https://crossorigin.me/" + endpoint, options).map(res => res.json());
   }
 
   getMeetups(city): any {
@@ -83,7 +84,7 @@ export class MeetupData {
     return this.get(this.baseUrlV2 + 'open_events', params);
   }
 
-  getMeetupGroups(topic): any{
+  getMeetupGroups(topic): any {
     let params = {
       text     : topic,
       order    : 'newest',
@@ -93,6 +94,20 @@ export class MeetupData {
 
     let endpoint = "find/groups"
     return this.get(this.baseUrlV1 + endpoint, params);
+  }
+
+  getMeetupHosts(meetupUrl, eventId): any{
+    let endpoint = `${meetupUrl}/events/${eventId}/hosts`;
+    return this.get(this.baseUrlV1 + endpoint, null, false);
+  }
+
+  getMeetupDetail(meetupUrl, eventId): any {
+    let endpoint = `${meetupUrl}/events/${eventId}`;
+    return this.get(this.baseUrlV1 + endpoint);
+  }
+
+  getMeetupGroupInfo(meetupUrl) {
+    return this.get(this.baseUrlV1 + meetupUrl);
   }
 
 }

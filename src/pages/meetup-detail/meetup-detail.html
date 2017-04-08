@@ -8,4 +8,15 @@
   <h2>At <i>{{meetup.venue?.name}}</i>, {{meetup.venue?.address_1}}</h2>
   <h3>On {{meetup.time | date}}</h3>
   <div [innerHTML]="meetup.description"></div>
+  <ion-card *ngFor="let host of hosts">
+    <ion-item>
+      <ion-avatar item-left>
+        <img [src]="host.photo?.thumb_link">
+      </ion-avatar>
+      <h2>{{ host.name }} - {{ host.group_profile?.role }}</h2>
+      <p>{{ host.bio }}</p>
+    </ion-item>
+  </ion-card>
+
+  <h3>Organized by {{ meetup.group?.name }}</h3>
 </ion-content>
