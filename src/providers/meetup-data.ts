@@ -60,14 +60,16 @@ export class MeetupData {
 
       // Needed params to make the request
       p.set('key'   , this.apiKey);
-      p.set('format', 'json');
+
+      // For jsonp calls so we don't have cors issues
+      p.set('callback', '?');
 
       // Set the search field if we have params and don't already have
       // a search field set in options.
       options.search = !options.search && p || options.search;
     }
 
-    let url = "https://crossorigin.me/" + this.baseUrl + endpoint;
+    let url = this.baseUrl + endpoint;
     return this.http.get(url, options);
   }
 
