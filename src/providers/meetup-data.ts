@@ -5,8 +5,9 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class MeetupData {
 
-  private baseUrl = "https://api.meetup.com/2/";
-  private apiKey  = "756f3d3c2c633b7fb272d1b2f367c70";
+  private baseUrlV1 = "https://api.meetup.com/";
+  private baseUrlV2 = "https://api.meetup.com/2/";
+  private apiKey    = "756f3d3c2c633b7fb272d1b2f367c70";
 
   CATEGORIES = {
     ART_AND_CULTURE      : 1,
@@ -69,18 +70,29 @@ export class MeetupData {
       options.search = !options.search && p || options.search;
     }
 
-    let url = this.baseUrl + endpoint;
-    return this.http.get(url, options);
+    return this.http.get(endpoint, options).map(res => res.json());
   }
 
-  getMeetups(): any {
+  getMeetups(city): any {
     let params = {
-      city     : 'chicago',
+      city     : city,
       category : this.CATEGORIES.TECH,
       page     : 10,
     }
 
-    return this.get('open_events', params).map(res => res.json());
+    return this.get(this.baseUrlV2 + 'open_events', params);
+  }
+
+  getMeetupGroups(topic): any{
+    let params = {
+      text     : topic,
+      order    : 'newest',
+      radius   : 'global',
+      category : this.CATEGORIES.TECH,
+    }
+
+    let endpoint = "find/groups"
+    return this.get(this.baseUrlV1 + endpoint, params);
   }
 
 }

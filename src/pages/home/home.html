@@ -8,7 +8,7 @@
 <ion-content class="primary-font">
   <div class="customTitle">
     <h1>Current Meetups</h1>
-    <h6 no-margin class="semi-transparent">{{numberOfEvents}} Near you</h6>
+    <h6 no-margin class="semi-transparent">{{ events.length }} Near you</h6>
   </div>
   <ion-card *ngFor="let event of events" (click)="goToDetail(event)">
     <ion-card-header>

@@ -1,11 +1,19 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>
-      About
-    </ion-title>
-  </ion-navbar>
-</ion-header>
-
-<ion-content padding>
-
+<ion-content class="primary-font">
+  <div class="customTitle">
+    <h1>Meetup groups</h1>
+    <h6 no-margin class="semi-transparent">{{ groups.length }} Near you</h6>
+  </div>
+  <ion-card *ngFor="let group of groups">
+    <ion-card-header>
+      <img style="width:20vw" [src]="group.group_photo?.thumb_link">
+      <h2 class="word-wrap" [innerHTML]="group.name"></h2>
+    </ion-card-header>
+    <ion-card-content>
+      <h6>Located at
+        <span>{{ group.city }}</span>
+        <span> , {{ group.localized_country_name }}</span>
+      </h6>
+      <p>Members: {{ group.members }}</p>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

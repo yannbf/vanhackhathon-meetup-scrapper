@@ -9,18 +9,15 @@ import { App, NavController } from 'ionic-angular';
 })
 export class HomePage {
 
-  events: any;
-  numberOfEvents : number;
+  events: any = [];
 
   constructor(public app: App, public navCtrl: NavController, public meetupProvider: MeetupData) {
     this.loadEvents();
   }
 
   loadEvents(){
-    this.meetupProvider.getMeetups().subscribe(meetupData => {
+    this.meetupProvider.getMeetups('chicago').subscribe(meetupData => {
       this.events = meetupData.results;
-      this.numberOfEvents = this.events.length;
-      // console.log(this.events, this.events.length);
     });
   }
 

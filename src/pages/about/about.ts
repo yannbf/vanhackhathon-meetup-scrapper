@@ -1,3 +1,4 @@
+import { MeetupData } from '../../providers/meetup-data';
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
@@ -7,8 +8,15 @@ import { NavController } from 'ionic-angular';
 })
 export class AboutPage {
 
-  constructor(public navCtrl: NavController) {
+  groups: any = [];
+  constructor(public navCtrl: NavController, public meetupProvider: MeetupData) {
+    this.loadGroups('ionic');
+  }
 
+  loadGroups(topic) {
+    this.meetupProvider.getMeetupGroups(topic).subscribe(groupsData => {
+      this.groups = groupsData;
+    });
   }
 
 }
