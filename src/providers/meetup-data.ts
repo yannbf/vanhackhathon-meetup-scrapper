@@ -96,14 +96,19 @@ export class MeetupData {
     return this.get(this.baseUrlV1 + endpoint, params);
   }
 
+  getMeetupDetail(meetupUrl, eventId): any {
+    let endpoint = `${meetupUrl}/events/${eventId}`;
+    return this.get(this.baseUrlV1 + endpoint);
+  }
+
   getMeetupHosts(meetupUrl, eventId): any{
     let endpoint = `${meetupUrl}/events/${eventId}/hosts`;
     return this.get(this.baseUrlV1 + endpoint, null, false);
   }
 
-  getMeetupDetail(meetupUrl, eventId): any {
-    let endpoint = `${meetupUrl}/events/${eventId}`;
-    return this.get(this.baseUrlV1 + endpoint);
+  getMeetupComments(meetupUrl, eventId): any {
+    let endpoint = `${meetupUrl}/events/${eventId}/comments`;
+    return this.get(this.baseUrlV1 + endpoint, null, false);
   }
 
   getMeetupGroupInfo(meetupUrl) {
