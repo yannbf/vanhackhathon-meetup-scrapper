@@ -8,11 +8,15 @@ import { NavController } from 'ionic-angular';
 })
 export class HomePage {
 
-  meetupData: any;
+  events: any;
 
   constructor(public navCtrl: NavController, public meetupProvider: MeetupData) {
-    this.meetupProvider.getMeetups().subscribe(meetups => {
-      this.meetupData = meetups.results;
+    this.loadEvents();
+  }
+
+  loadEvents(){
+    this.meetupProvider.getMeetups().subscribe(meetupData => {
+      this.events = meetupData.results;
     });
   }
 
