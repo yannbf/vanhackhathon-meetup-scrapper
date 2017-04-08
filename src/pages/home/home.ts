@@ -1,3 +1,4 @@
+import { MeetupData } from '../../providers/meetup-data';
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
@@ -7,8 +8,12 @@ import { NavController } from 'ionic-angular';
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController) {
+  meetupData: any;
 
+  constructor(public navCtrl: NavController, public meetupProvider: MeetupData) {
+    this.meetupProvider.getMeetups().subscribe(meetups => {
+      this.meetupData = meetups.results;
+    });
   }
 
 }
