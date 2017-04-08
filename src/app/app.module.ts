@@ -1,3 +1,4 @@
+import { UserSettingsModule } from '../pages/user-settings/user-settings.module';
 import { LoadingService } from '../providers/util/loading.service';
 import { AlertService } from '../providers/util/alert.service';
 import { ToastService } from '../providers/util/toast.service';
@@ -7,7 +8,7 @@ import { MeetupDetailModule } from '../pages/meetup-detail/meetup-detail.module'
 import { MeetupData } from '../providers/meetup-data';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpModule, JsonpModule, Jsonp } from '@angular/http';
+import { HttpModule, JsonpModule } from '@angular/http';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
@@ -58,6 +59,7 @@ const appSettings = {
     HttpModule,
     JsonpModule,
     MeetupDetailModule,
+    UserSettingsModule,
     AuthModule,
     IonicModule.forRoot(MyApp, appSettings),
     AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),

@@ -1,5 +1,5 @@
 import { MeetupData } from '../../providers/meetup-data';
-import { Component } from '@angular/core';
+import { Component, NgZone, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 @IonicPage()
@@ -8,16 +8,22 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'meetup-detail.html',
 })
 export class MeetupDetail {
+  @ViewChild('map') mapElement: ElementRef;
 
+  map: any;
   meetup   : any;
   hosts    : any = [];
   comments : any = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public meetupData: MeetupData) {
+    public meetupData: MeetupData, public zone: NgZone) {
     this.meetup = navParams.data;
     this.getHosts();
     this.getComments();
+  }
+
+  ngAfterViewInit(){
+    this.initializeMap();
   }
 
   getHosts(){
@@ -32,4 +38,32 @@ export class MeetupDetail {
     });
   }
 
+  initializeMap() {
+    this.zone.run(() => {
+      let mapStyles = [{"featureType":"all","elementType":"labels.text.fill","stylers":[{"color":"#ffffff"}]},{"featureType":"all","elementType":"labels.text.stroke","stylers":[{"color":"#000000"},{"lightness":13}]},{"featureType":"administrative","elementType":"geometry.fill","stylers":[    {"color":"#000000"}]},{"featureType":"administrative","elementType":"geometry.stroke","stylers":[{"color":"#144b53"},{"lightness":14},{"weight":1.4}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#08304b"}]},{"featureType":"poi","elementType":"geometry","stylers":[{"color":"#0c4152"},{"lightness":5}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#000000"}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#0b434f"},{"lightness":25}]},{"featureType":"road.arterial","elementType":"geometry.fill","stylers":[{"color":"#000000"}]},{"featureType":"road.arterial","elementType":"geometry.stroke","stylers":[{"color":"#0b3d51"},{"lightness":16}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"color":"#000000"}]},{"featureType":"transit","elementType":"all","stylers":[{"color":"#146474"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#021019"}]}];
+
+      let mapOptions = {
+        zoom: 15,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        styles: mapStyles,
+        disableDoubleClickZoom: false,
+        disableDefaultUI: true,
+      }
+
+      this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+
+      let { lat, lon } = this.meetup.venue;
+      let markerData = {
+        position: {
+          lat: lat,
+          lng: lon
+        },
+        map: this.map,
+        title: this.meetup.venue.name,
+      };
+
+      let marker = new google.maps.Marker(markerData);
+      this.map.setCenter(marker.getPosition());
+    });
+  }
 }

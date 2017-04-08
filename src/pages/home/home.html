@@ -1,16 +1,18 @@
-<!-- <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Upcoming Meetups
-    </ion-title>
-  </ion-navbar>
-</ion-header> -->
+<ion-header>
+  <ion-searchbar #searchbar placeholder="Search" [hidden]="!search"></ion-searchbar>
+</ion-header>
 <ion-content class="primary-font">
   <div class="customTitle">
     <h1>Current Meetups</h1>
-    <h6 no-margin class="semi-transparent">{{ events.length }} Near you</h6>
+    <h6 no-margin class="semi-transparent">{{ events.length }} Near
+      <span *ngIf="!location">you</span>
+      <span *ngIf="location">{{location}}</span>
+    </h6>
   </div>
   <button ion-button clear (click)="logout()">Logout</button>
+  <div *ngIf="events.length <= 0" style="width: 100%; text-align: center">
+    <h2>There are currently no events.</h2>
+  </div>
   <ion-card *ngFor="let event of events" (click)="goToDetail(event)">
     <ion-card-header>
       <h2 class="word-wrap" [innerHTML]="event.name"></h2>
@@ -25,4 +27,9 @@
       <p>on {{event.time | date}}</p>
     </ion-card-content>
   </ion-card>
+  <ion-fab right bottom (click)="toggleSearch()">
+    <button ion-fab class="pop-in">
+      <ion-icon name="search"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>

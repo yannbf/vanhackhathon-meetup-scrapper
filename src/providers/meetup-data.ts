@@ -84,6 +84,16 @@ export class MeetupData {
     return this.get(this.baseUrlV2 + 'open_events', params);
   }
 
+   getMeetupsByLatLong(lat, long): any {
+    let params = {
+      lat      : lat,
+      lon      : long,
+      category : this.CATEGORIES.TECH,
+    }
+
+    return this.get(this.baseUrlV2 + 'open_events', params);
+  }
+
   getMeetupGroups(topic): any {
     let params = {
       text     : topic,

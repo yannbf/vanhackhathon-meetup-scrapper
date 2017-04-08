@@ -7,6 +7,7 @@
 <ion-content padding class="primary-font">
   <h2>At <i>{{meetup.venue?.name}}</i>, {{meetup.venue?.address_1}}</h2>
   <h3>On {{meetup.time | date}}</h3>
+  <div id="map" #map></div>
   <div [innerHTML]="meetup.description"></div>
   <h3>Hosts:</h3>
   <ion-card *ngFor="let host of hosts">
@@ -19,7 +20,7 @@
     </ion-item>
   </ion-card>
 
-  <h4>Organized by {{ meetup.group?.name }}</h4>
+  <h5>Organized by {{ meetup.group?.name }}</h5>
 
   <div *ngIf="comments">
     <h4>Comments</h4>
