@@ -1,19 +1,27 @@
-<ion-header>
+<!-- <ion-header>
   <ion-navbar>
     <ion-title>
       Upcoming Meetups
     </ion-title>
   </ion-navbar>
-</ion-header>
-<ion-content>
+</ion-header> -->
+<ion-content class="primary-font">
+  <div class="customTitle">
+    <h1>Current Meetups</h1>
+    <h6 no-margin class="semi-transparent">{{numberOfEvents}} Near you</h6>
+  </div>
   <ion-card *ngFor="let event of events" (click)="goToDetail(event)">
     <ion-card-header>
-      <h2 word-wrap><strong>{{event.name}}</strong></h2>
+      <h2 class="word-wrap" [innerHTML]="event.name"></h2>
     </ion-card-header>
     <ion-card-content>
-      <h2>At <i>{{event.venue?.name}}</i>, {{event.venue?.address_1}}</h2>
-      <p><strong>on {{event.time | date}}</strong></p>
+      <h6>At
+        <span *ngIf="!event.venue?.name">Undisclosed</span>
+        <span *ngIf="event.venue?.name">{{event.venue?.name}}</span>
+        <span *ngIf="!event.venue?.address_1"></span>
+        <span *ngIf="event.venue?.address_1"> , {{event.venue?.address_1}}</span>
+      </h6>
+      <p>on {{event.time | date}}</p>
     </ion-card-content>
   </ion-card>
 </ion-content>
-

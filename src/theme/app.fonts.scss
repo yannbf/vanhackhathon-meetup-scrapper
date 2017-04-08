@@ -1,0 +1,42 @@
+/*
+    App Wide Fonts and various weights
+*/
+
+@font-face {
+    font-family: "Varela Round";
+    src: url("../assets/fonts/VarelaRound-Regular.ttf") format('truetype');
+}
+
+// @font-face {
+//     font-family: "Varela Bold";
+//     src: url("../assets/fonts/Varela-Bold.ttf") format('truetype');
+// }
+
+
+.primary-font {
+  font-family: "Varela Round";
+  &.covers-children * {
+    font-family: "Varela Round";
+  }
+  &.bold-weight {
+    // font-family: "Varela Bold";
+  }
+  &.light-weight {
+    // No light defined for Varela
+  }
+  &.semi-bold {
+    // No semi bold fo Varela
+  }
+}
+
+
+.bold {font-weight:bold;}
+.text-right {text-align: right;}
+.text-left {text-align: left;}
+.text-center {text-align: center;}
+.uppercase {text-transform:uppercase;}
+.no-margin {margin:0;}
+.text-ellipsis {
+	text-overflow: ellipsis;
+}
+.no-underline {text-decoration: none;}

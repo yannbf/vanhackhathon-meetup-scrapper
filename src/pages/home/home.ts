@@ -10,6 +10,7 @@ import { App, NavController } from 'ionic-angular';
 export class HomePage {
 
   events: any;
+  numberOfEvents : number;
 
   constructor(public app: App, public navCtrl: NavController, public meetupProvider: MeetupData) {
     this.loadEvents();
@@ -18,6 +19,8 @@ export class HomePage {
   loadEvents(){
     this.meetupProvider.getMeetups().subscribe(meetupData => {
       this.events = meetupData.results;
+      this.numberOfEvents = this.events.length;
+      // console.log(this.events, this.events.length);
     });
   }
 
