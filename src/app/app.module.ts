@@ -1,3 +1,4 @@
+import { MeetupDetailModule } from '../pages/meetup-detail/meetup-detail.module';
 import { MeetupData } from '../providers/meetup-data';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -24,6 +25,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   imports: [
     BrowserModule,
     HttpModule,
+    MeetupDetailModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],

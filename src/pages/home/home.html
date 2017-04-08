@@ -1,8 +1,14 @@
-<ion-content padding>
-  <h2>Meetup thingy</h2>
-  <ion-card *ngFor="let event of events">
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Upcoming Meetups
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-card *ngFor="let event of events" (click)="goToDetail(event)">
     <ion-card-header>
-      <h2><strong>{{event.name}}</strong></h2>
+      <h2 word-wrap><strong>{{event.name}}</strong></h2>
     </ion-card-header>
     <ion-card-content>
       <h2>At <i>{{event.venue?.name}}</i>, {{event.venue?.address_1}}</h2>

@@ -1,0 +1,11 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{ meetup.name }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <h2>At <i>{{meetup.venue?.name}}</i>, {{meetup.venue?.address_1}}</h2>
+  <h3>On {{meetup.time | date}}</h3>
+  <div [innerHTML]="meetup.description"></div>
+</ion-content>

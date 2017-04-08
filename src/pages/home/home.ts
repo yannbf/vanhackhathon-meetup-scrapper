@@ -1,6 +1,7 @@
+import { MeetupDetail } from '../meetup-detail/meetup-detail';
 import { MeetupData } from '../../providers/meetup-data';
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { App, NavController } from 'ionic-angular';
 
 @Component({
   selector: 'page-home',
@@ -10,7 +11,7 @@ export class HomePage {
 
   events: any;
 
-  constructor(public navCtrl: NavController, public meetupProvider: MeetupData) {
+  constructor(public app: App, public navCtrl: NavController, public meetupProvider: MeetupData) {
     this.loadEvents();
   }
 
@@ -18,6 +19,10 @@ export class HomePage {
     this.meetupProvider.getMeetups().subscribe(meetupData => {
       this.events = meetupData.results;
     });
+  }
+
+  goToDetail(meetup){
+    this.app.getRootNav().push(MeetupDetail, meetup);
   }
 
 }
