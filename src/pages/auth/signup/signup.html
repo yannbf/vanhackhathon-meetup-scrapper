@@ -1,0 +1,51 @@
+<ion-header no-border>
+  <ion-navbar transparent>
+    <ion-title>Signup</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content fullscreen padding class="primary-font">
+  <img class="logo" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=Logo&w=350&h=150" />
+  <form padding [formGroup]="signupForm" (submit)="signup()" novalidate>
+    <ion-item>
+      <ion-input [(ngModel)]="firstName"
+                 formControlName="firstName"
+                 type="text"
+                 placeholder="First name"
+                 clearInput clearOnEdit="false">
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input [(ngModel)]="lastName"
+                 formControlName="lastName"
+                 type="text"
+                 placeholder="Last name"
+                 clearInput clearOnEdit="false">
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input [(ngModel)]="email"
+                 formControlName="email"
+                 type="text"
+                 placeholder="E-mail"
+                 clearInput clearOnEdit="false">
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input [(ngModel)]="password"
+                 formControlName="password"
+                 type="password"
+                 placeholder="Password"
+                 clearInput clearOnEdit="false">
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input [(ngModel)]="passwordConfirm"
+                 formControlName="passwordConfirm"
+                 type="password"
+                 placeholder="Confirm password"
+                 clearInput clearOnEdit="false">
+      </ion-input>
+    </ion-item>
+    <button ion-button block outline color="light" class="login-button">Create account</button>
+  </form>
+</ion-content>

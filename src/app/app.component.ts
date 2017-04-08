@@ -1,7 +1,9 @@
+import { LoginPage } from '../pages/auth/login/login';
 import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { AngularFire } from 'angularfire2';
 
 import { TabsPage } from '../pages/tabs/tabs';
 
@@ -9,14 +11,34 @@ import { TabsPage } from '../pages/tabs/tabs';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = TabsPage;
+  rootPage:any;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
-    platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-      statusBar.styleDefault();
-      splashScreen.hide();
+  constructor(public platform: Platform, public statusBar: StatusBar,
+              public splashScreen: SplashScreen, public af: AngularFire) {
+    this.initializeApp();
+  }
+
+  initializeApp(){
+    this.platform.ready().then(() => {
+      this.getInitialPageToLoad().then((page) => {
+        this.rootPage = page;
+        this.statusBar.styleDefault();
+        this.splashScreen.hide();
+      });
+    });
+  }
+
+  getInitialPageToLoad() {
+    return new Promise((resolve, reject) => {
+      const unsubscribe = this.af.auth.subscribe(user => {
+        if (user) {
+          resolve(TabsPage);
+          unsubscribe.unsubscribe();
+        } else {
+          resolve(LoginPage);
+          unsubscribe.unsubscribe();
+        }
+      });
     });
   }
 }

@@ -1,0 +1,33 @@
+<ion-content padding class="primary-font">
+  <img class="logo" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=Logo&w=350&h=150" />
+  <form padding [formGroup]="loginForm" (submit)="login()" novalidate>
+    <ion-item>
+      <ion-input [(ngModel)]="email"
+                 formControlName="email"
+                 type="text"
+                 placeholder="E-mail"
+                 clearInput clearOnEdit="false">
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input [(ngModel)]="password"
+                 formControlName="password"
+                 type="password"
+                 placeholder="Password"
+                 clearInput clearOnEdit="false">
+      </ion-input>
+    </ion-item>
+    <button ion-button block outline color="light" class="login-button">Create account</button>
+  </form>
+  <div class="strike">
+    <span>OR</span>
+  </div>
+  <button ion-button block clear (click)="facebookLogin()" color="light" class="login-button"><ion-icon name="logo-facebook"></ion-icon> Login with Facebook</button>
+</ion-content>
+<ion-footer>
+  <ion-toolbar class="footer">
+    <div (click)="goToSignup()">
+      <span>Don't have an account? <strong>Sign up here</strong>.</span>
+    </div>
+  </ion-toolbar>
+</ion-footer>

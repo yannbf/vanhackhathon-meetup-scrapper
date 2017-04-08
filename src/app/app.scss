@@ -16,3 +16,11 @@
 // automatically applied to the <body> element in the app.
 
 @import "../theme/app.fonts";
+
+ion-loading .loading-wrapper {
+    background: transparent !important;
+}
+
+.text-input-clear-icon {
+    background-color: transparent;
+}

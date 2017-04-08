@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, URLSearchParams, RequestOptions } from '@angular/http';
+import { Http, Jsonp, URLSearchParams, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 @Injectable()
@@ -45,7 +45,7 @@ export class MeetupData {
     WRITING              : 36,
   }
 
-  constructor(public http: Http) { }
+  constructor(public http: Http, public jsonp: Jsonp) { }
 
   get(endpoint: string, params?: any, options?: RequestOptions) {
     if (!options) {
@@ -63,14 +63,14 @@ export class MeetupData {
       p.set('key'   , this.apiKey);
 
       // For jsonp calls so we don't have cors issues
-      p.set('callback', '?');
+      p.set('callback', 'JSONP_CALLBACK');
 
       // Set the search field if we have params and don't already have
       // a search field set in options.
       options.search = !options.search && p || options.search;
     }
 
-    return this.http.get(endpoint, options).map(res => res.json());
+    return this.jsonp.request(endpoint, options).map(res => res.json());
   }
 
   getMeetups(city): any {

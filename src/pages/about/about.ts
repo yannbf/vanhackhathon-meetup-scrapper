@@ -15,7 +15,7 @@ export class AboutPage {
 
   loadGroups(topic) {
     this.meetupProvider.getMeetupGroups(topic).subscribe(groupsData => {
-      this.groups = groupsData;
+      this.groups = groupsData.data;
     });
   }
 

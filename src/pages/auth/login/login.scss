@@ -1,0 +1,113 @@
+page-login {
+  $transparent-white: rgba(255, 255, 255, .6);
+  .toolbar-content,
+  span {
+    color: white;
+  }
+  .toolbar-background,{
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+  ion-footer {
+    height: 47px;
+  }
+  .footer {
+    text-align: center;
+    background: rgba(255, 255, 255, .06);
+    min-height: 47px;
+  }
+  .footer-md::before {
+    border-top: 1px solid $transparent-white;
+    background-image: none;
+  }
+
+  ion-content {
+    background: linear-gradient(316deg, transparentize(black, .15), #404654);
+    background-size: 1800% 1800%;
+    animation: gradient-effect 15s linear infinite;
+  }
+
+  @keyframes gradient-effect {
+    0% {
+      background-position: 0% 0%
+    }
+    50% {
+      background-position: 100% 100%
+    }
+    100% {
+      background-position: 0% 0%
+    }
+  }
+  // Content
+  .scroll-content {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .logo {
+    width: 50%;
+    height: auto;
+    margin: 0 auto;
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+  // Input items
+  ion-item {
+    border-radius: 3px !important;
+    padding-left: 10px !important;
+    margin-bottom: 15px !important;
+    margin-bottom: 10px;
+    color: #fff !important;
+    background-color: rgba(255, 255, 255, .2) !important;
+    font-size: 0.9em;
+  }
+   ::-webkit-input-placeholder {
+    color: white !important;
+  }
+  .item-inner {
+    border-bottom: 0 !important;
+    box-shadow: none !important;
+  }
+  // --
+  .login-button {
+    text-transform: none;
+    border-radius: 3px !important;
+    &.activated {
+      background-color: rgba(255,255,255,.4) !important;
+    }
+  }
+  // Facebook icon
+  ion-icon {
+    padding-right: 10px;
+    font-size: 2.2rem;
+  }
+  // HR with text in the middle effect
+  .strike {
+    display: block;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .strike>span {
+    position: relative;
+    display: inline-block;
+    font-weight: bold;
+  }
+  .strike>span:before,
+  .strike>span:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 9999px;
+    height: 1px;
+    background: $transparent-white;
+  }
+  .strike>span:before {
+    right: 100%;
+    margin-right: 15px;
+  }
+  .strike>span:after {
+    left: 100%;
+    margin-left: 15px;
+  }
+}
