@@ -1,3 +1,4 @@
+import { SplashScreen } from '@ionic-native/splash-screen';
 import { UserSettingsPage } from '../user-settings/user-settings';
 import { Component } from '@angular/core';
 
@@ -14,7 +15,7 @@ export class TabsPage {
   tab2Root = AboutPage;
   tab3Root = UserSettingsPage;
 
-  constructor() {
-
+  constructor(public splashscreen: SplashScreen) {
+      splashscreen.hide();
   }
 }

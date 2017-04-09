@@ -6,8 +6,10 @@ import { MeetupFirebaseData } from '../../providers/meetup-firebase-data';
 import { MeetupDetail } from '../meetup-detail/meetup-detail';
 import { MeetupData } from '../../providers/meetup-data';
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { App, NavController } from 'ionic-angular';
+import { App, NavController, Platform } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
+
+declare var google: any;
 
 @Component({
   selector: 'page-home',
@@ -26,12 +28,12 @@ export class HomePage {
   constructor(public app: App, public navCtrl: NavController,
               public meetupProvider: MeetupData, public firebaseData: MeetupFirebaseData,
               public authData: AuthData, public loadingCtrl: LoadingService,
-              public alertCtrl: AlertService) {
+              public alertCtrl: AlertService, public platform: Platform) {
     this.loadEvents();
   }
 
   ngAfterViewInit(){
-    this.initAutocomplete();
+    this.platform.ready().then(() => this.initAutocomplete());
   }
 
   initAutocomplete(): void {

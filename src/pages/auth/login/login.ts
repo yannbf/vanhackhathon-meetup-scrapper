@@ -1,3 +1,4 @@
+import { SplashScreen } from '@ionic-native/splash-screen';
 import { TabsPage } from '../../tabs/tabs';
 import { AuthData } from '../../../providers/auth-data';
 import { LoadingService } from '../../../providers/util/loading.service';
@@ -19,12 +20,13 @@ export class LoginPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, formBuilder: FormBuilder,
     public toastCtrl: ToastService, public alertCtrl: AlertService, public loadingCtrl: LoadingService,
-    public authData: AuthData) {
+    public authData: AuthData, public splashscreen: SplashScreen) {
     this.loginForm = formBuilder.group({
       email: ['', Validators.required],
       password: ['', Validators.compose([Validators.minLength(6), Validators.maxLength(20),
       Validators.required])],
     });
+    splashscreen.hide();
   }
 
   login() {

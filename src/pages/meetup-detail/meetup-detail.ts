@@ -1,6 +1,6 @@
 import { MeetupData } from '../../providers/meetup-data';
 import { Component, NgZone, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -16,14 +16,14 @@ export class MeetupDetail {
   comments : any = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public meetupData: MeetupData, public zone: NgZone) {
+    public meetupData: MeetupData, public zone: NgZone, public platform: Platform) {
     this.meetup = navParams.data;
     this.getHosts();
     this.getComments();
   }
 
   ngAfterViewInit(){
-    this.initializeMap();
+    this.platform.ready().then(() => { this.initializeMap(); });
   }
 
   getHosts(){
