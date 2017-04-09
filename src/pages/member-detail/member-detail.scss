@@ -1,0 +1,28 @@
+page-member-detail {
+    .toolbar .toolbar-background {
+    background: transparentize(black, 0.50) !important;
+    border-bottom: none;
+  }
+
+  .toolbar button.bar-button span, .toolbar-title {
+    color: white;
+  }
+  ion-content {
+    h1,h2,h3,h4,h5,h6, p, small {
+      color: white;
+    }
+    a {
+      color : transparentize(white, 0.5) !important;
+    }
+  }
+
+  ion-content .scroll-content {
+    background-color: #1e222d;
+    color: white;
+  }
+
+  .profile-section {
+    margin-top: 2.5rem;
+  }
+
+}

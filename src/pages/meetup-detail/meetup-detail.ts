@@ -1,3 +1,4 @@
+import { MemberDetailPage } from '../member-detail/member-detail';
 import { MeetupData } from '../../providers/meetup-data';
 import { Component, NgZone, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
@@ -44,6 +45,10 @@ export class MeetupDetail {
     this.meetupData.getMeetupComments(this.meetup.group.urlname, this.meetup.id).subscribe(commentsData => {
       this.comments = commentsData;
     });
+  }
+
+  seeMemberDetails(host){
+    this.navCtrl.push(MemberDetailPage, host.id);
   }
 
   initializeMap() {

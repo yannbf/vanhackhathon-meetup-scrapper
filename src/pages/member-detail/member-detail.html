@@ -1,0 +1,30 @@
+<ion-header class="primary-font">
+  <ion-navbar>
+    <ion-title>{{ member.name }}</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content fullscreen padding class="primary-font">
+  <div *ngIf="member">
+    <div style="text-align: center">
+      <img [src]="member.photo?.photo_link"/>
+      <h3>{{ member.name }}</h3>
+    </div>
+    <p>{{ member.city }} - {{ member.country | uppercase }}</p>
+    <p>Member since: {{ member.joined | date}}</p>
+    <p>{{ member.bio }}</p>
+
+    <div class="profile-section" *ngIf="member.social">
+      <h3>Social</h3>
+      <div *ngFor="let social of member.social">
+        <ion-icon [name]="'logo-' + social.provider"></ion-icon> <span>{{ social.profile }}</span>
+      </div>
+    </div>
+
+    <div class="profile-section" *ngIf="member.topics">
+      <h3>Interests</h3>
+      <ion-chip *ngFor="let interest of member.topics">
+        <ion-label>{{ interest.name }}</ion-label>
+      </ion-chip>
+    </div>
+  </div>
+</ion-content>

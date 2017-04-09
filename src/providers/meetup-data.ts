@@ -48,27 +48,29 @@ export class MeetupData {
   constructor(public http: Http, public jsonp: Jsonp) { }
 
   get(endpoint: string, params?: any, jsonp: boolean = true, options?: RequestOptions) {
-    if (!options) {
-      options = new RequestOptions();
-    }
+
+    options = new RequestOptions();
 
     // Support easy query params for GET requests
+    let p = new URLSearchParams();
     if (params) {
-      let p = new URLSearchParams();
       for(let k in params) {
         p.set(k, params[k]);
       }
 
-      // Needed params to make the request
-      p.set('key' , this.apiKey);
+    }
 
+    if(jsonp){
       // For jsonp calls so we don't have cors issues
       p.set('callback', 'JSONP_CALLBACK');
-
-      // Set the search field if we have params and don't already have
-      // a search field set in options.
-      options.search = !options.search && p || options.search;
     }
+
+    // Needed params to make the request
+    p.set('key' , this.apiKey);
+
+    // Set the search field if we have params and don't already have
+    // a search field set in options.
+    options.search = !options.search && p || options.search;
 
     return jsonp ? this.jsonp.request(endpoint, options).map(res => res.json())
                  : this.http.get("https://crossorigin.me/" + endpoint, options).map(res => res.json());
@@ -85,16 +87,6 @@ export class MeetupData {
     if(lat && long){
       params['lat'] = lat;
       params['lon'] = long;
-    }
-
-    return this.get(this.baseUrlV2 + 'open_events', params);
-  }
-
-   getMeetupsByLatLong(lat, long): any {
-    let params = {
-      lat      : lat,
-      lon      : long,
-      category : this.CATEGORIES.TECH,
     }
 
     return this.get(this.baseUrlV2 + 'open_events', params);
@@ -129,6 +121,11 @@ export class MeetupData {
 
   getMeetupGroupInfo(meetupUrl) {
     return this.get(this.baseUrlV1 + meetupUrl);
+  }
+
+  getMemberDetails(memberId){
+    let endpoint = `member/${memberId}`;
+    return this.get(this.baseUrlV2 + endpoint, null, false);
   }
 
 }

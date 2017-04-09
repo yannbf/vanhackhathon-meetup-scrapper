@@ -1,3 +1,4 @@
+import { MemberDetailModule } from '../pages/member-detail/member-detail.module';
 import { UserSettingsModule } from '../pages/user-settings/user-settings.module';
 import { LoadingService } from '../providers/util/loading.service';
 import { AlertService } from '../providers/util/alert.service';
@@ -77,6 +78,7 @@ class GeolocationMock extends Geolocation {
     JsonpModule,
     MeetupDetailModule,
     UserSettingsModule,
+    MemberDetailModule,
     AuthModule,
     IonicModule.forRoot(MyApp, appSettings),
     AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),

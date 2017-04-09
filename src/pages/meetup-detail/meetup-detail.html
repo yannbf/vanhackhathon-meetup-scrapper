@@ -14,7 +14,7 @@
     <div [innerHTML]="meetup.description"></div>
     <h3>Hosts:</h3>
     <ion-card class="mt-hosts" *ngFor="let host of hosts">
-      <ion-item>
+      <ion-item (click)="seeMemberDetails(host)">
         <ion-avatar item-left>
           <img [src]="host.photo?.thumb_link">
         </ion-avatar>
