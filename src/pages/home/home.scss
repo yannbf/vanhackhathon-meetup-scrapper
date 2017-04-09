@@ -48,3 +48,13 @@ page-home {
     background-color: rgba(0, 0, 0, 0.5);
   }
 }
+
+ion-tabs > div.tabbar.show-tabbar {
+  background: darken(#404654, 10%);
+  a.tab-button[aria-selected=true] .tab-button-icon {
+    color: white;
+  }
+  a.tab-button, a.tab-button ion-icon {
+    color : white;
+  }
+}
