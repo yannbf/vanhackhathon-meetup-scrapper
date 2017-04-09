@@ -1,5 +1,8 @@
+import { LoginPage } from '../auth/login/login';
+import { AuthData } from '../../providers/auth-data';
+import { AlertService } from '../../providers/util/alert.service';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { App, IonicPage, NavController, NavParams } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -8,11 +11,19 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class UserSettingsPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public alertCtrl: AlertService,
+    public authData: AuthData, public app: App) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad UserSettings');
+  logout() {
+    this.alertCtrl.createWithCallback("Are you sure?",
+      "This will log you out of this application.", true).then((yes) => {
+      if (yes) {
+        this.authData.logoutUser().then((result) => {
+          this.app.getRootNav().setRoot(LoginPage);
+        }, (error) => {
+        });
+      }
+    });
   }
-
 }

@@ -34,7 +34,6 @@ export class SignupPage {
   signup() {
     let { email, password, passwordConfirm, firstName, lastName } = this.signupForm.controls;
     let passwordMismatch = passwordConfirm.value !== password.value;
-    debugger;
     if (!this.signupForm.valid || passwordMismatch) {
       let errorMessage = "";
 
@@ -54,7 +53,6 @@ export class SignupPage {
 
       this.toastCtrl.create(errorMessage);
     } else {
-      debugger;
       this.loadingCtrl.present();
       let { email, password, firstName, lastName } = this.signupForm.value;
       this.authData.signupUser(email, password, firstName, lastName).then(() => {

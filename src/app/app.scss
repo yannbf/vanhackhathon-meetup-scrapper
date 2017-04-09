@@ -19,10 +19,18 @@
 
 ion-loading .loading-wrapper {
     background: transparent !important;
+    box-shadow: none !important;
 }
 
 .text-input-clear-icon {
     background-color: transparent;
+}
+
+// Google maps autocomplete item
+.pac-item {
+    height: 5rem;
+    display: flex;
+    align-items: center;
 }
 
 // POP-IN (FLOAT ACTION BUTTON EFFECT) -------------

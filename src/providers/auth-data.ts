@@ -1,7 +1,4 @@
 import { AngularFire, AuthProviders, AuthMethods, FirebaseObjectObservable } from 'angularfire2';
-// import { Facebook, GooglePlus } from 'ionic-native';
-// import { UserData } from './user-data.service';
-// import { Global } from '../app/app.global';
 import { Platform } from 'ionic-angular';
 import { Injectable } from '@angular/core';
 import firebase from 'firebase';

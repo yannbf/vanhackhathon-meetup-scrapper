@@ -59,15 +59,20 @@ export class MeetupDetail {
       }
 
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-
-      let { lat, lon } = this.meetup.venue;
+      let lat, lon;
+      if(this.meetup.venue){
+        lat = this.meetup.venue.lat;
+        lon = this.meetup.venue.lon;
+      } else {
+        lat = this.meetup.group.group_lat;
+        lon = this.meetup.group.group_lon;
+      }
       let markerData = {
         position: {
           lat: lat,
           lng: lon
         },
         map: this.map,
-        title: this.meetup.venue.name,
       };
 
       let marker = new google.maps.Marker(markerData);

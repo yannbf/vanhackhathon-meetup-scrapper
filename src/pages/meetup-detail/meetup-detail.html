@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content padding class="primary-font">
-  <h2>At <i>{{meetup.venue?.name}}</i>, {{meetup.venue?.address_1}}</h2>
+  <h2 *ngIf="meetup.venue">At <i>{{meetup.venue?.name}}</i>, {{meetup.venue?.address_1}}</h2>
   <h3>On {{meetup.time | date}}</h3>
   <div id="map" #map></div>
   <div [innerHTML]="meetup.description"></div>
