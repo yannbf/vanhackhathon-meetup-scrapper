@@ -1,6 +1,5 @@
 page-meetup-detail {
    .mt-hosts {
-
   }
   .wrap-bag {
     padding: 6px 9px;
@@ -17,7 +16,6 @@ page-meetup-detail {
     background: transparentize(black, 0.50) !important;
     border-bottom: none;
   }
-
   .toolbar button.bar-button span, .toolbar-title {
     color: white;
     // padding-left: 6px;
@@ -34,13 +32,11 @@ page-meetup-detail {
     background-color: #1e222d;
     color: white;
   }
-
   ion-content .scroll-content, ion-content .fixed-content {
     margin-top: 0 !important;
     padding-top: 0 !important;
     border-bottom: 1px solid transparent;
   }
-
   .toolbar {
     button {
       padding-left: 20px;
@@ -57,15 +53,22 @@ page-meetup-detail {
   .detail-padding {
     padding: 30px;
   }
-
-  ion-card .mt-hosts {
+  ion-card.mt-hosts {
     &.card-md, &.card-ios {
-
       border-radius: 5px;
-      margin:30px;
-      width: calc(100% - 60px);
+      margin:10px 0;
+      width: calc(100%);
       box-shadow: none;
       background: #404654;
+      ion-item {
+        background: #404654;
+        h1,h2,h3,h4,h5,h6 {
+          color: white;
+        }
+        p {
+          color : transparentize(white, 0.5);
+        }
+      }
       .card-header{
         &.card-header-md, &.card-header-ios {
           padding: 20px 16px 5px 16px !important;
@@ -75,7 +78,6 @@ page-meetup-detail {
         }
       }
     }
-
     ion-card-content {
       &.card-content-md, &.card-content-ios {
         h1,h2,h3,h4,h5,h6, p, small {

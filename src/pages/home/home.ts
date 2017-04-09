@@ -30,6 +30,9 @@ export class HomePage {
   long               = null;
 
   topics = [{
+    name: 'Hackathon',
+    color: '#FF640C'
+  },{
     name: 'Ionic',
     color: '#6064FC'
   }, {
