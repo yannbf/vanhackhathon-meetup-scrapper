@@ -33,6 +33,16 @@ ion-loading .loading-wrapper {
     align-items: center;
 }
 
+ion-chip {
+    margin: 5px !important;
+    border: 1px solid rgba(56, 245, 239, 0.74);;
+    color: white !important;
+    font-weight: bold !important;
+    .button {
+        color: rgba(56, 245, 239, 0.74);
+    }
+}
+
 // POP-IN (FLOAT ACTION BUTTON EFFECT) -------------
 .pop-in {
   animation: pop-in 0.65s;

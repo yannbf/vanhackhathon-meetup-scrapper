@@ -1,4 +1,13 @@
 page-home {
+  .slide-zoom {
+    height: 100%;
+    color: white;
+  }
+
+  hr {
+    background-color: white !important;
+  }
+
   // @extend .primary-font;
   ion-content .fixed-content {
     background-color: #1e222d;

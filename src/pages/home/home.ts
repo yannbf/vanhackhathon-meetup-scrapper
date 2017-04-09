@@ -24,11 +24,43 @@ export class HomePage {
   search: boolean    = false;
   fabGone: boolean   = false;
   location: string   = "";
+  meetupCount        = 0;
+
+  topics = [{
+    name: 'Ionic',
+    color: '#6064FC'
+  }, {
+    name: 'React',
+    color: '#99D6D9'
+  }, {
+    name: 'Angular',
+    color: '#A5A3DD'
+  },{
+    name: 'Vue',
+    color: '#4F99F0'
+  }, {
+    name: 'Aurelia',
+    color: '#f8ab02'
+  }];
+
+  selectedTopics = [];
 
   constructor(public app: App, public navCtrl: NavController,
               public meetupProvider: MeetupData, public firebaseData: MeetupFirebaseData,
               public authData: AuthData, public loadingCtrl: LoadingService,
               public alertCtrl: AlertService, public platform: Platform) {
+    this.loadEvents();
+  }
+
+  addTopic(topic){
+    if(this.selectedTopics.indexOf(topic) === -1){
+      this.selectedTopics.push(topic);
+      this.loadEvents();
+    }
+  }
+
+  deleteTopic(topic) {
+    this.selectedTopics.splice(this.selectedTopics.indexOf(topic),1);
     this.loadEvents();
   }
 
@@ -84,8 +116,14 @@ export class HomePage {
   }
 
   loadEvents(){
-    this.meetupProvider.getMeetups('chicago').subscribe(meetupData => {
-      this.events = meetupData.results;
+    this.loadingCtrl.present();
+    let topics = this.selectedTopics.join(' ');
+    this.meetupProvider.getMeetups('chicago', topics).subscribe(meetupData => {
+      this.loadingCtrl.dismiss().then(() => {
+        this.meetupCount = meetupData.meta.total_count;
+        // this.nextUrl = meetupData.meta.
+        this.events = meetupData.results;
+      });
     });
   }
 

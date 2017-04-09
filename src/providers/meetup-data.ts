@@ -74,11 +74,12 @@ export class MeetupData {
                  : this.http.get("https://crossorigin.me/" + endpoint, options).map(res => res.json());
   }
 
-  getMeetups(city): any {
+  getMeetups(city, topics): any {
     let params = {
       city     : city,
+      text     : topics || '',
+      time     : ',1w',
       category : this.CATEGORIES.TECH,
-      page     : 10,
     }
 
     return this.get(this.baseUrlV2 + 'open_events', params);

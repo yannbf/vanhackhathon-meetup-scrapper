@@ -4,14 +4,11 @@ page-meetup-detail {
     width: 100%;
   }
   .toolbar .toolbar-background {
-    background: transparent !important;
-    border-bottom: none;
+    background: rgba(0,0,0,.4) !important;
   }
 
-  .toolbar button.bar-button span {
+  .toolbar button.bar-button span, .toolbar-title {
     color: white;
-    // padding-left: 6px;
-    padding-top: 26px;
   }
 
   ion-content .scroll-content, ion-content .fixed-content {

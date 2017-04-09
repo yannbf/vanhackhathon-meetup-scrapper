@@ -1,17 +1,32 @@
 <ion-header>
-  <ion-searchbar #searchbar placeholder="Search" [hidden]="!search"></ion-searchbar>
+  <ion-searchbar #searchbar placeholder="Search city or address" [hidden]="!search"></ion-searchbar>
 </ion-header>
 <ion-content class="primary-font">
   <div class="customTitle">
     <h1>Current Meetups</h1>
-    <h6 no-margin class="semi-transparent">{{ events.length }} Near
+    <h6 no-margin class="semi-transparent">{{ meetupCount }} Near
       <span *ngIf="!location">you</span>
       <span *ngIf="location">{{location}}</span>
     </h6>
   </div>
-  <button ion-button clear (click)="logout()">Logout</button>
+  <div padding>
+    <ion-chip *ngFor="let topic of selectedTopics">
+      <ion-label>{{ topic }}</ion-label>
+      <button ion-button clear (click)="deleteTopic(topic)">
+        <ion-icon name="close-circle"></ion-icon>
+      </button>
+    </ion-chip>
+  </div>
+  <ion-slides padding spaceBetween="10" slidesPerView="3" style="height: 20vh">
+		<ion-slide *ngFor="let topic of topics" style="border-radius: 5px"
+        [ngStyle]="{'background': 'linear-gradient(336deg, #CFD4DE, '+topic.color+')'}"
+        (click)="addTopic(topic.name)">
+      <hr margin>
+      <span class="white">{{ topic.name }}</span>
+    </ion-slide>
+  </ion-slides>
   <div *ngIf="events.length <= 0" style="width: 100%; text-align: center">
-    <h2>There are currently no events.</h2>
+    <h2 class="white">There are currently no events.</h2>
   </div>
   <ion-card *ngFor="let event of events" (click)="goToDetail(event)">
     <ion-card-header>
