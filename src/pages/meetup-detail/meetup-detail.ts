@@ -2,6 +2,8 @@ import { MeetupData } from '../../providers/meetup-data';
 import { Component, NgZone, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 
+declare var google: any;
+
 @IonicPage()
 @Component({
   selector: 'page-meetup-detail',
@@ -23,7 +25,13 @@ export class MeetupDetail {
   }
 
   ngAfterViewInit(){
-    this.platform.ready().then(() => { this.initializeMap(); });
+    this.platform.ready().then(() => {
+      if (!!google) {
+        this.initializeMap();
+      } else {
+        console.log('There was a weird error when trying to load google api..');
+      }
+    });
   }
 
   getHosts(){

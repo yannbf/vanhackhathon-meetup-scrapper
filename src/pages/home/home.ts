@@ -33,7 +33,13 @@ export class HomePage {
   }
 
   ngAfterViewInit(){
-    this.platform.ready().then(() => this.initAutocomplete());
+    this.platform.ready().then(() => {
+      if (!!google) {
+        this.initAutocomplete();
+      } else {
+        console.log('There was a weird error when trying to load google api..');
+      }
+    });
   }
 
   initAutocomplete(): void {

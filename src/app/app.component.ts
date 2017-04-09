@@ -23,7 +23,6 @@ export class MyApp {
       this.getInitialPageToLoad().then((page) => {
         this.rootPage = page;
         this.statusBar.styleDefault();
-        this.splashScreen.hide();
       });
     });
   }
