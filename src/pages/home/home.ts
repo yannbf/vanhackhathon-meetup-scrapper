@@ -32,9 +32,6 @@ export class HomePage {
   view : string      = "meetups";
 
   topics = [{
-    name: 'Hackathon',
-    color: '#FF640C'
-  },{
     name: 'Ionic',
     color: '#6064FC'
   }, {
@@ -49,6 +46,18 @@ export class HomePage {
   }, {
     name: 'Aurelia',
     color: '#f8ab02'
+  }, {
+    name: 'Java',
+    color: '#ff1616'
+  }, {
+    name: 'C#',
+    color: '#16ff89'
+  }, {
+    name: 'Big Data',
+    color: '#b016ff'
+  },{
+    name: 'Hackathon',
+    color: '#FF640C'
   }];
 
   selectedTopics = [];

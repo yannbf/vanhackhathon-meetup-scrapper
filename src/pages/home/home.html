@@ -4,7 +4,8 @@
 <ion-content class="primary-font">
   <div class="mt-header">
     <div class="customTitle">
-      <h1>Current Meetups</h1>
+      <h1 *ngIf="view == 'meetups'">Upcoming Meetups</h1>
+      <h1 *ngIf="view == 'groups'">Meetup Groups</h1>
       <h6 no-margin class="semi-transparent">{{ meetupCount }} Near
         <span *ngIf="!location">you</span>
         <span *ngIf="location">{{location}}</span>
@@ -29,7 +30,7 @@
   </div>
   <ion-slides padding spaceBetween="10" slidesPerView="3" style="height: 20vh">
 		<ion-slide *ngFor="let topic of topics" style="border-radius: 5px"
-        [ngStyle]="{'background': 'linear-gradient(336deg, #CFD4DE, '+topic.color+')'}"
+        [ngStyle]="{'background': 'linear-gradient(283deg, #CFD4DE, '+topic.color+')'}"
         (click)="addTopic(topic.name)">
       <hr margin>
       <span class="white">{{ topic.name }}</span>
