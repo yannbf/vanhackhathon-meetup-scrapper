@@ -3,10 +3,10 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
 @Component({
-  selector: 'page-about',
-  templateUrl: 'about.html'
+  selector: 'page-groups',
+  templateUrl: 'groups.html'
 })
-export class AboutPage {
+export class GroupsPage {
 
   groups: any = [];
   constructor(public navCtrl: NavController, public meetupProvider: MeetupData) {

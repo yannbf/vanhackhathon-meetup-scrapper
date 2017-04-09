@@ -1,6 +1,6 @@
 <ion-header class="primary-font">
   <ion-navbar>
-    <ion-title>{{ member.name }}</ion-title>
+    <ion-title *ngIf="member">{{ member.name }}</ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content fullscreen padding class="primary-font">

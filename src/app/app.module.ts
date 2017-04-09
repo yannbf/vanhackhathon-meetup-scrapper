@@ -1,3 +1,4 @@
+import { GroupsPage } from '../pages/groups/groups';
 import { MemberDetailModule } from '../pages/member-detail/member-detail.module';
 import { UserSettingsModule } from '../pages/user-settings/user-settings.module';
 import { LoadingService } from '../providers/util/loading.service';
@@ -13,7 +14,6 @@ import { HttpModule, JsonpModule } from '@angular/http';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
-import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
@@ -67,7 +67,7 @@ class GeolocationMock extends Geolocation {
 @NgModule({
   declarations: [
     MyApp,
-    AboutPage,
+    GroupsPage,
     ContactPage,
     HomePage,
     TabsPage
@@ -86,7 +86,7 @@ class GeolocationMock extends Geolocation {
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    AboutPage,
+    GroupsPage,
     ContactPage,
     HomePage,
     TabsPage
