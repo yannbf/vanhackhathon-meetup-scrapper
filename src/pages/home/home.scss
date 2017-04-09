@@ -1,4 +1,10 @@
 page-home {
+
+  .selected-topics {
+    overflow: auto;
+    display: flex;
+  }
+
   .slide-zoom {
     height: 100%;
     color: white;

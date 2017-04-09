@@ -6,6 +6,7 @@ import { MeetupFirebaseData } from '../../providers/meetup-firebase-data';
 import { MeetupDetail } from '../meetup-detail/meetup-detail';
 import { MeetupData } from '../../providers/meetup-data';
 import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Geolocation } from '@ionic-native/geolocation';
 import { App, NavController, Platform } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 
@@ -25,6 +26,8 @@ export class HomePage {
   fabGone: boolean   = false;
   location: string   = "";
   meetupCount        = 0;
+  lat                = null;
+  long               = null;
 
   topics = [{
     name: 'Ionic',
@@ -48,8 +51,13 @@ export class HomePage {
   constructor(public app: App, public navCtrl: NavController,
               public meetupProvider: MeetupData, public firebaseData: MeetupFirebaseData,
               public authData: AuthData, public loadingCtrl: LoadingService,
-              public alertCtrl: AlertService, public platform: Platform) {
-    this.loadEvents();
+              public alertCtrl: AlertService, public platform: Platform,
+              public geolocation: Geolocation) {
+    this.geolocation.getCurrentPosition().then(position => {
+      this.lat  = position.coords.latitude;
+      this.long = position.coords.longitude;
+      this.loadEvents();
+    });
   }
 
   addTopic(topic){
@@ -77,16 +85,10 @@ export class HomePage {
   initAutocomplete(): void {
     this.addressElement = this.searchbar.nativeElement.querySelector('.searchbar-input');
     this.createAutocomplete(this.addressElement).subscribe((location) => {
-      let lat  = location.lat();
-      let long = location.lng();
-      this.loadingCtrl.present();
-      this.meetupProvider.getMeetupsByLatLong(lat, long).subscribe((meetupData) =>{
-        this.loadingCtrl.dismiss().then( () => {
-          this.events     = meetupData.results;
-          this.listSearch = '';
-          this.search     = false;
-        });
-      });
+      this.lat    = location.lat();
+      this.long   = location.lng();
+      this.search = false;
+      this.loadEvents();
     });
   }
 
@@ -118,7 +120,7 @@ export class HomePage {
   loadEvents(){
     this.loadingCtrl.present();
     let topics = this.selectedTopics.join(' ');
-    this.meetupProvider.getMeetups('chicago', topics).subscribe(meetupData => {
+    this.meetupProvider.getMeetups(topics, this.lat, this.long).subscribe(meetupData => {
       this.loadingCtrl.dismiss().then(() => {
         this.meetupCount = meetupData.meta.total_count;
         // this.nextUrl = meetupData.meta.

@@ -20,6 +20,8 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+import { Geolocation } from '@ionic-native/geolocation'
+
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 
 // AF2 Settings
@@ -45,6 +47,21 @@ const appSettings = {
   modalLeave: 'modal-slide-out',
   pageTransition: 'ios'
 };
+
+class GeolocationMock extends Geolocation {
+  getCurrentPosition() {
+    return new Promise((resolve, reject) => {
+      // Always resolve to Chicago
+      let resp = {
+        coords: {
+          latitude  : 41.8769925,
+          longitude : -87.6980273
+        }
+      }
+      resolve(resp);
+    })
+  }
+}
 
 @NgModule({
   declarations: [
@@ -80,7 +97,8 @@ const appSettings = {
     ToastService,
     AlertService,
     LoadingService,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    { provide: Geolocation, useClass: GeolocationMock }
   ]
 })
 export class AppModule {}

@@ -9,7 +9,7 @@
       <span *ngIf="location">{{location}}</span>
     </h6>
   </div>
-  <div padding>
+  <div padding class="selected-topics">
     <ion-chip *ngFor="let topic of selectedTopics">
       <ion-label>{{ topic }}</ion-label>
       <button ion-button clear (click)="deleteTopic(topic)">
