@@ -1,6 +1,39 @@
 page-meetup-detail {
-    #map {
-    height: 30vh;
+  #map {
+    height: 50vh;
     width: 100%;
+  }
+  .toolbar .toolbar-background {
+    background: transparent !important;
+    border-bottom: none;
+  }
+
+  .toolbar button.bar-button span {
+    color: white;
+    // padding-left: 6px;
+    padding-top: 26px;
+  }
+
+  ion-content .scroll-content, ion-content .fixed-content {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    border-bottom: 1px solid transparent;
+  }
+
+  .toolbar {
+    button {
+      padding-left: 20px;
+    }
+    .toolbar-background {
+      &.toolbar-background-ios, .toolbar-background-md {
+        border-bottom: none;
+      }
+    }
+  }
+  .semi-transparent {
+    color : transparentize(black, 0.5);
+  }
+  .detail-padding {
+    padding: 30px;
   }
 }

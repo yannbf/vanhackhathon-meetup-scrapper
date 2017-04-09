@@ -1,56 +1,58 @@
 <ion-header class="primary-font">
   <ion-navbar>
-    <ion-title>{{ meetup.name }}</ion-title>
+    <ion-title></ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding class="primary-font">
-  <h2 *ngIf="meetup.venue">At <i>{{meetup.venue?.name}}</i>, {{meetup.venue?.address_1}}</h2>
-  <h3>On {{meetup.time | date}}</h3>
+<ion-content class="primary-font">
   <div id="map" #map></div>
-  <div [innerHTML]="meetup.description"></div>
-  <h3>Hosts:</h3>
-  <ion-card *ngFor="let host of hosts">
-    <ion-item>
-      <ion-avatar item-left>
-        <img [src]="host.photo?.thumb_link">
-      </ion-avatar>
-      <h2>{{ host.name }} - {{ host.group_profile?.role }}</h2>
-      <p>{{ host.bio }}</p>
-    </ion-item>
-  </ion-card>
+  <div class="detail-padding">
+    <h2 *ngIf="meetup.venue">At <i>{{meetup.venue?.name}}</i>, {{meetup.venue?.address_1}}</h2>
+    <h3>On {{meetup.time | date}}</h3>
+    <div [innerHTML]="meetup.description"></div>
+    <h3>Hosts:</h3>
+    <ion-card *ngFor="let host of hosts">
+      <ion-item>
+        <ion-avatar item-left>
+          <img [src]="host.photo?.thumb_link">
+        </ion-avatar>
+        <h2>{{ host.name }} - {{ host.group_profile?.role }}</h2>
+        <p>{{ host.bio }}</p>
+      </ion-item>
+    </ion-card>
 
-  <h5>Organized by {{ meetup.group?.name }}</h5>
+    <h5>Organized by {{ meetup.group?.name }}</h5>
 
-  <div *ngIf="comments">
-    <h4>Comments</h4>
-    <ion-card *ngFor="let comment of comments">
-      <ion-card-header>
-        <ion-item>
-          <ion-avatar item-left>
-            <img [src]="comment.member?.photo?.thumb_link">
-          </ion-avatar>
-          <h2>{{ comment.member?.name }} - {{ comment.member?.role }}</h2>
-        </ion-item>
-      </ion-card-header>
-      <ion-card-content>
-        <p>at {{ comment.created | date : 'shortTime' }}</p>
-        <p>{{ comment.comment }}</p>
-      </ion-card-content>
-      <ion-card *ngFor="let reply of comment.replies">
+    <div *ngIf="comments">
+      <h4>Comments</h4>
+      <ion-card *ngFor="let comment of comments">
         <ion-card-header>
           <ion-item>
             <ion-avatar item-left>
-              <img [src]="reply.member?.photo?.thumb_link">
+              <img [src]="comment.member?.photo?.thumb_link">
             </ion-avatar>
-            <h2>{{ reply.member?.name }} - {{ reply.member?.role }}</h2>
+            <h2>{{ comment.member?.name }} - {{ comment.member?.role }}</h2>
           </ion-item>
         </ion-card-header>
         <ion-card-content>
-          <p>at {{ reply.created | date : 'shortTime' }}</p>
-          <p>{{ reply.comment }}</p>
+          <p>at {{ comment.created | date : 'shortTime' }}</p>
+          <p>{{ comment.comment }}</p>
         </ion-card-content>
+        <ion-card *ngFor="let reply of comment.replies">
+          <ion-card-header>
+            <ion-item>
+              <ion-avatar item-left>
+                <img [src]="reply.member?.photo?.thumb_link">
+              </ion-avatar>
+              <h2>{{ reply.member?.name }} - {{ reply.member?.role }}</h2>
+            </ion-item>
+          </ion-card-header>
+          <ion-card-content>
+            <p>at {{ reply.created | date : 'shortTime' }}</p>
+            <p>{{ reply.comment }}</p>
+          </ion-card-content>
+        </ion-card>
       </ion-card>
-    </ion-card>
+    </div>
   </div>
 </ion-content>
