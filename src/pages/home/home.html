@@ -30,16 +30,16 @@
   </div>
   <ion-card *ngFor="let event of events" (click)="goToDetail(event)">
     <ion-card-header>
-      <h2 class="word-wrap" [innerHTML]="event.name"></h2>
+      <h2 class="word-wrap secondary-font" [innerHTML]="event.name"></h2>
     </ion-card-header>
     <ion-card-content>
-      <h6>At
+      <small class="semi-transparent">on {{event.time | date}}</small>
+      <h6 class="secondary-font">At
         <span *ngIf="!event.venue?.name">Undisclosed</span>
         <span *ngIf="event.venue?.name">{{event.venue?.name}}</span>
         <span *ngIf="!event.venue?.address_1"></span>
         <span *ngIf="event.venue?.address_1"> , {{event.venue?.address_1}}</span>
       </h6>
-      <p>on {{event.time | date}}</p>
     </ion-card-content>
   </ion-card>
   <ion-fab right bottom (click)="toggleSearch()">

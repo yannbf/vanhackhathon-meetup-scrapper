@@ -17,6 +17,11 @@
 
 @import "../theme/app.fonts";
 
+@import "../pages/contact/contact";
+.app-background {
+  background-color: #1e222d !important;
+}
+
 ion-loading .loading-wrapper {
     background: transparent !important;
     box-shadow: none !important;

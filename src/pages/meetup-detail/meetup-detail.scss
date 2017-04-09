@@ -1,13 +1,37 @@
 page-meetup-detail {
+   .mt-hosts {
+
+  }
+  .wrap-bag {
+    padding: 6px 9px;
+    background: lighten(#1e222d, 30%);
+    border-radius: 15px;
+    margin: 3px 0;
+    display: inline-block;
+  }
   #map {
     height: 50vh;
     width: 100%;
   }
   .toolbar .toolbar-background {
-    background: rgba(0,0,0,.4) !important;
+    background: transparentize(black, 0.50) !important;
+    border-bottom: none;
   }
 
   .toolbar button.bar-button span, .toolbar-title {
+    color: white;
+    // padding-left: 6px;
+  }
+  ion-content {
+    h1,h2,h3,h4,h5,h6, p, small {
+      color: white;
+    }
+    a {
+      color : transparentize(white, 0.5) !important;
+    }
+  }
+  ion-content .fixed-content {
+    background-color: #1e222d;
     color: white;
   }
 
@@ -32,5 +56,32 @@ page-meetup-detail {
   }
   .detail-padding {
     padding: 30px;
+  }
+
+  ion-card .mt-hosts {
+    &.card-md, &.card-ios {
+
+      border-radius: 5px;
+      margin:30px;
+      width: calc(100% - 60px);
+      box-shadow: none;
+      background: #404654;
+      .card-header{
+        &.card-header-md, &.card-header-ios {
+          padding: 20px 16px 5px 16px !important;
+          h1,h2,h3,h4,h5,h6 {
+            color: white;
+          }
+        }
+      }
+    }
+
+    ion-card-content {
+      &.card-content-md, &.card-content-ios {
+        h1,h2,h3,h4,h5,h6, p, small {
+          color: white;
+        }
+      }
+    }
   }
 }

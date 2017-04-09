@@ -1,3 +1,70 @@
 page-contact {
+    .semi-transparent {
+    color : transparentize(white, 0.5) !important;
+  }
+  // @extend .primary-font;
+  ion-content .scroll-content {
+    &.content-ios, &.content-md {
+      background-color: #1e222d !important;
+    }
+  }
+  ion-searchbar.searchbar {
+    &.searchbar-ios, &.searchbar-md {
+      padding-left: 0;
+      padding-right: 0;
+      margin-top: 10px;
+    }
+  }
+  .word-wrap {
+    word-wrap: break-word;
+    // overflow-x: hidden;
+    // text-overflow: ellipsis;
+    white-space:normal;
+  }
+  .customTitle {
+    padding: 35px 30px 25px 30px;
+    background: transparentize(black, 0.5);
+    margin: 0;
+    color: white;
+  }
+  ion-card {
+    &.card-md, &.card-ios {
 
+      border-radius: 5px;
+      margin:30px;
+      width: calc(100% - 60px);
+      box-shadow: none;
+      background: #404654;
+      .card-header{
+        &.card-header-md, &.card-header-ios {
+          padding: 20px 16px 5px 16px !important;
+          h1,h2,h3,h4,h5,h6 {
+            color: white;
+          }
+        }
+      }
+    }
+
+    ion-card-content {
+      &.card-content-md, &.card-content-ios {
+        h1,h2,h3,h4,h5,h6, p, small {
+          color: white;
+        }
+      }
+    }
+  }
+
+  .fab {
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  ion-tabs > div.tabbar.show-tabbar {
+  background: darken(#404654, 10%);
+  a.tab-button[aria-selected=true] .tab-button-icon {
+    color: white;
+  }
+  a.tab-button, a.tab-button ion-icon {
+    color : white;
+  }
 }

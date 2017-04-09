@@ -7,11 +7,13 @@
 <ion-content class="primary-font">
   <div id="map" #map></div>
   <div class="detail-padding">
-    <h2 *ngIf="meetup.venue">At <i>{{meetup.venue?.name}}</i>, {{meetup.venue?.address_1}}</h2>
-    <h3>On {{meetup.time | date}}</h3>
+    <!-- <h2>At {{meetup.venue?.name}}, {{meetup.venue?.address_1}}</h2> -->
+    <h2 *ngIf="meetup.venue">At {{meetup.venue?.name}}, {{meetup.venue?.address_1}}</h2>
+    <h2 *ngIf="!meetup.venue">Undisclosed</h2>
+    <small class="wrap-bag"> On {{meetup.time | date}} </small>
     <div [innerHTML]="meetup.description"></div>
     <h3>Hosts:</h3>
-    <ion-card *ngFor="let host of hosts">
+    <ion-card class="mt-hosts" *ngFor="let host of hosts">
       <ion-item>
         <ion-avatar item-left>
           <img [src]="host.photo?.thumb_link">

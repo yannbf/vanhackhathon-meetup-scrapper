@@ -8,6 +8,10 @@ page-home {
     background-color: white !important;
   }
 
+  .semi-transparent {
+    color : transparentize(white, 0.5) !important;
+  }
+
   // @extend .primary-font;
   ion-content .fixed-content {
     background-color: #1e222d;
@@ -19,13 +23,10 @@ page-home {
     white-space:normal;
   }
   .customTitle {
-    padding: 35px 30px;
+    padding: 35px 30px 25px 30px;
     background: transparentize(black, 0.5);
     margin: 0;
     color: white;
-    .semi-transparent {
-      color : transparentize(white, 0.5);
-    }
   }
   ion-card {
     &.card-md, &.card-ios {
