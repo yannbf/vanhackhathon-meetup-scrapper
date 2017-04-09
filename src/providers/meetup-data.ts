@@ -92,12 +92,22 @@ export class MeetupData {
     return this.get(this.baseUrlV2 + 'open_events', params);
   }
 
-  getMeetupGroups(topic): any {
+  getMeetupGroups(topics, lat?, long?): any {
+    // let params = {
+    //   text     : topic,
+    //   order    : 'newest',
+    //   radius   : 'global',
+    //   category : this.CATEGORIES.TECH,
+    // }
     let params = {
-      text     : topic,
-      order    : 'newest',
-      radius   : 'global',
+      // city     : city,
+      text     : topics || '',
       category : this.CATEGORIES.TECH,
+    }
+
+    if(lat && long){
+      params['lat'] = lat;
+      params['lon'] = long;
     }
 
     let endpoint = "find/groups"

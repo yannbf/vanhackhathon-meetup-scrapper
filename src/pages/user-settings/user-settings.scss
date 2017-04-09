@@ -1,4 +1,13 @@
 page-user-settings {
+  .button-clear-md-primary {
+    color: rgba(56, 245, 239, 0.74);
+  }
+  img {
+    height: 25vh;
+    border-radius: 50%;
+    background: #69717d;
+    padding: .2rem;
+  }
   .white .toolbar-title, .white {
     color: white !important;
   }

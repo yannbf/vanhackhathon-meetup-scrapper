@@ -22,12 +22,14 @@ export class HomePage {
 
   listSearch: string = '';
   events: any        = [];
+  groups: any        = [];
   search: boolean    = false;
   fabGone: boolean   = false;
   location: string   = "";
   meetupCount        = 0;
   lat                = null;
   long               = null;
+  view : string      = "meetups";
 
   topics = [{
     name: 'Hackathon',
@@ -59,20 +61,20 @@ export class HomePage {
     this.geolocation.getCurrentPosition().then(position => {
       this.lat  = position.coords.latitude;
       this.long = position.coords.longitude;
-      this.loadEvents();
+      this.loadData();
     });
   }
 
   addTopic(topic){
     if(this.selectedTopics.indexOf(topic) === -1){
       this.selectedTopics.push(topic);
-      this.loadEvents();
+      this.loadData();
     }
   }
 
   deleteTopic(topic) {
     this.selectedTopics.splice(this.selectedTopics.indexOf(topic),1);
-    this.loadEvents();
+    this.loadData();
   }
 
   ngAfterViewInit(){
@@ -91,7 +93,7 @@ export class HomePage {
       this.lat    = location.lat();
       this.long   = location.lng();
       this.search = false;
-      this.loadEvents();
+      this.loadData();
     });
   }
 
@@ -120,7 +122,15 @@ export class HomePage {
     }
   }
 
-  loadEvents(){
+  loadData() {
+    if(this.view == 'meetups'){
+      this.loadEvents();
+    } else {
+      this.loadGroups();
+    }
+  }
+
+  loadEvents() {
     this.loadingCtrl.present();
     let topics = this.selectedTopics.join(' ');
     this.meetupProvider.getMeetups(topics, this.lat, this.long).subscribe(meetupData => {
@@ -128,6 +138,18 @@ export class HomePage {
         this.meetupCount = meetupData.meta.total_count;
         // this.nextUrl = meetupData.meta.
         this.events = meetupData.results;
+      });
+    });
+  }
+
+  loadGroups() {
+    this.loadingCtrl.present();
+    let topics = this.selectedTopics.join(' ');
+    this.meetupProvider.getMeetupGroups(topics, this.lat, this.long).subscribe(groupsData => {
+      this.loadingCtrl.dismiss().then(() => {
+        this.meetupCount = groupsData.meta.total_count;
+        // this.nextUrl = groupsData.meta.
+        this.groups = groupsData.data;
       });
     });
   }

@@ -1,6 +1,6 @@
 page-home {
-  h3 {
-    color: white;
+  h3, .segment-button {
+    color: white !important;
   }
 
   .selected-topics {
@@ -31,11 +31,17 @@ page-home {
     // text-overflow: ellipsis;
     white-space:normal;
   }
-  .customTitle {
-    padding: 35px 30px 25px 30px;
+  .segment-button.segment-activated{
+    border-color: #ffffff !important;
+    opacity: .7;
+  }
+  .mt-header {
     background: transparentize(black, 0.5);
     margin: 0;
     color: white;
+  }
+  .customTitle {
+    padding: 35px 30px 25px 30px;
   }
   ion-card {
     &.card-md, &.card-ios {

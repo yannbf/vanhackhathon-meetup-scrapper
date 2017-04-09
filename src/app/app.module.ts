@@ -25,6 +25,8 @@ import { Geolocation } from '@ionic-native/geolocation'
 
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 
+import { Facebook } from '@ionic-native/facebook';
+
 // AF2 Settings
 export const firebaseConfig = {
   apiKey: "AIzaSyA2WUdcpBjBLXWnWql-5YCmhB0Rne3L1jc",
@@ -99,6 +101,7 @@ class GeolocationMock extends Geolocation {
     ToastService,
     AlertService,
     LoadingService,
+    Facebook,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     { provide: Geolocation, useClass: GeolocationMock }
   ]

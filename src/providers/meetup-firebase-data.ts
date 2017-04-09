@@ -6,11 +6,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class MeetupFirebaseData {
 
+  userProfile: any;
   constructor(public http: Http, public af: AngularFire) {
-    console.log('Hello MeetupFirebaseData Provider');
-  }
-
-  getSomething() {
-      return this.af.database.object('test');
   }
 }

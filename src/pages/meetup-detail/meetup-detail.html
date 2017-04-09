@@ -12,6 +12,7 @@
     <h2 *ngIf="!meetup.venue">Undisclosed</h2>
     <small class="wrap-bag"> On {{meetup.time | date}} </small>
     <div [innerHTML]="meetup.description"></div>
+    <h5>Organized by {{ meetup.group?.name }}</h5>
     <h3>Hosts:</h3>
     <ion-card class="mt-hosts" *ngFor="let host of hosts">
       <ion-item (click)="seeMemberDetails(host)">
@@ -23,9 +24,7 @@
       </ion-item>
     </ion-card>
 
-    <h5>Organized by {{ meetup.group?.name }}</h5>
-
-    <div *ngIf="comments">
+    <div *ngIf="comments.length > 0">
       <h4>Comments</h4>
       <ion-card *ngFor="let comment of comments">
         <ion-card-header>
@@ -33,7 +32,7 @@
             <ion-avatar item-left>
               <img [src]="comment.member?.photo?.thumb_link">
             </ion-avatar>
-            <h2>{{ comment.member?.name }} - {{ comment.member?.role }}</h2>
+            <h2>{{ comment.member?.name }}</h2>
           </ion-item>
         </ion-card-header>
         <ion-card-content>

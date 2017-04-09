@@ -11,8 +11,10 @@ import { App, IonicPage, NavController } from 'ionic-angular';
 })
 export class UserSettingsPage {
 
+  user: any;
   constructor(public navCtrl: NavController, public alertCtrl: AlertService,
     public authData: AuthData, public app: App) {
+    this.user = authData.getCurrentUser();
   }
 
   logout() {

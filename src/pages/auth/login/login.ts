@@ -46,7 +46,7 @@ export class LoginPage {
       let { email, password } = this.loginForm.value;
       this.authData.loginUser(email, password).then(() => {
         this.loadingCtrl.dismiss().then(() => {
-          this.navCtrl.setRoot(TabsPage);
+          this.goToHome();
         });
       }, (error) => {
         this.loadingCtrl.dismiss().then(() => {
@@ -56,11 +56,32 @@ export class LoginPage {
     }
   }
 
-  facebookLogin(){
-    this.toastCtrl.create("Oops, not implemented yet!");
+  facebookLogin() {
+    this.loadingCtrl.present();
+    this.authData.facebookLogin().then(response => {
+      if (response == true) {
+        this.loadingCtrl.dismiss().then(() => {
+          this.goToHome();
+        });
+      } else {
+        this.loadingCtrl.dismiss().then(() => {
+          if (response.message) {
+            this.alertCtrl.createWithError(response.message);
+          }
+        });
+      }
+    }, error => {
+      this.loadingCtrl.dismiss().then(() => {
+        this.alertCtrl.createWithError(JSON.stringify(error));
+      });
+    });
   }
 
-  goToSignup(){
+  goToHome() {
+    this.navCtrl.setRoot(TabsPage);
+  }
+
+  goToSignup() {
     this.navCtrl.push(SignupPage);
   }
 

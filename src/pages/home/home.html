@@ -2,12 +2,22 @@
   <ion-searchbar #searchbar placeholder="Search city or address" [hidden]="!search"></ion-searchbar>
 </ion-header>
 <ion-content class="primary-font">
-  <div class="customTitle">
-    <h1>Current Meetups</h1>
-    <h6 no-margin class="semi-transparent">{{ meetupCount }} Near
-      <span *ngIf="!location">you</span>
-      <span *ngIf="location">{{location}}</span>
-    </h6>
+  <div class="mt-header">
+    <div class="customTitle">
+      <h1>Current Meetups</h1>
+      <h6 no-margin class="semi-transparent">{{ meetupCount }} Near
+        <span *ngIf="!location">you</span>
+        <span *ngIf="location">{{location}}</span>
+      </h6>
+    </div>
+    <ion-segment [(ngModel)]="view">
+      <ion-segment-button value="meetups" ion-text color="white" (ionSelect)="loadEvents()">
+        Meetups
+      </ion-segment-button>
+      <ion-segment-button value="groups" (ionSelect)="loadGroups()">
+        Groups
+      </ion-segment-button>
+    </ion-segment>
   </div>
   <div padding class="selected-topics">
     <ion-chip *ngFor="let topic of selectedTopics">
@@ -28,20 +38,37 @@
   <div *ngIf="events.length <= 0" style="width: 100%; text-align: center">
     <h3>There are currently no events.</h3>
   </div>
-  <ion-card *ngFor="let event of events" (click)="goToDetail(event)">
-    <ion-card-header>
-      <h2 class="word-wrap secondary-font" [innerHTML]="event.name"></h2>
-    </ion-card-header>
-    <ion-card-content>
-      <small class="semi-transparent">on {{event.time | date}}</small>
-      <h6 class="secondary-font">At
-        <span *ngIf="!event.venue?.name">Undisclosed</span>
-        <span *ngIf="event.venue?.name">{{event.venue?.name}}</span>
-        <span *ngIf="!event.venue?.address_1"></span>
-        <span *ngIf="event.venue?.address_1"> , {{event.venue?.address_1}}</span>
-      </h6>
-    </ion-card-content>
-  </ion-card>
+  <div *ngIf="view == 'meetups'">
+    <ion-card *ngFor="let event of events" (click)="goToDetail(event)">
+      <ion-card-header>
+        <h2 class="word-wrap secondary-font" [innerHTML]="event.name"></h2>
+      </ion-card-header>
+      <ion-card-content>
+        <small class="semi-transparent">on {{event.time | date}}</small>
+        <h6 class="secondary-font">At
+          <span *ngIf="!event.venue?.name">Undisclosed</span>
+          <span *ngIf="event.venue?.name">{{event.venue?.name}}</span>
+          <span *ngIf="!event.venue?.address_1"></span>
+          <span *ngIf="event.venue?.address_1"> , {{event.venue?.address_1}}</span>
+        </h6>
+      </ion-card-content>
+    </ion-card>
+  </div>
+  <div *ngIf="view == 'groups'">
+    <ion-card *ngFor="let group of groups">
+      <ion-card-header>
+        <img style="width:20vw" [src]="group.group_photo?.thumb_link" onerror="this.style.display='none'">
+        <h2 class="word-wrap" [innerHTML]="group.name"></h2>
+      </ion-card-header>
+      <ion-card-content>
+        <h6>Located at
+          <span>{{ group.city }}</span>
+          <span> , {{ group.localized_country_name }}</span>
+        </h6>
+        <p>Members: {{ group.members }}</p>
+      </ion-card-content>
+    </ion-card>
+  </div>
   <ion-fab right bottom (click)="toggleSearch()">
     <button ion-fab class="pop-in">
       <ion-icon name="search"></ion-icon>

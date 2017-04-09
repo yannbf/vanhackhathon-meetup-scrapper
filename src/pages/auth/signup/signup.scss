@@ -41,15 +41,15 @@ $transparent-white: rgba(255, 255, 255, .6);
   }
   // Content
   .scroll-content {
+    padding-top: 0 !important;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
   }
   .logo {
-    width: 65%;
+    width: 80%;
     height: auto;
     margin: 0 auto;
-    padding-top: 50px;
+    padding-top: 30px;
     padding-bottom: 50px;
   }
   // Input items

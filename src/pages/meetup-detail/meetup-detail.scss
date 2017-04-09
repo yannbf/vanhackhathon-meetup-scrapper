@@ -53,7 +53,7 @@ page-meetup-detail {
   .detail-padding {
     padding: 30px;
   }
-  ion-card.mt-hosts {
+  ion-card {
     &.card-md, &.card-ios {
       border-radius: 5px;
       margin:10px 0;
