@@ -13,14 +13,14 @@
     <p>Member since: {{ member.joined | date}}</p>
     <p>{{ member.bio }}</p>
 
-    <div class="profile-section" *ngIf="member.social">
+    <div class="profile-section" *ngIf="member.social.length > 0">
       <h3>Social</h3>
       <div *ngFor="let social of member.social">
         <ion-icon [name]="'logo-' + social.provider"></ion-icon> <span>{{ social.profile }}</span>
       </div>
     </div>
 
-    <div class="profile-section" *ngIf="member.topics">
+    <div class="profile-section" *ngIf="member.topics.length > 0">
       <h3>Interests</h3>
       <ion-chip *ngFor="let interest of member.topics">
         <ion-label>{{ interest.name }}</ion-label>

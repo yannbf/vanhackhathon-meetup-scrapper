@@ -1,10 +1,10 @@
 {
-  "name": "Meetap - A Vanhack Challenge",
-  "short_name": "Meetap",
+  "name": "Meetapp - A Vanhack Challenge",
+  "short_name": "Meetapp",
   "start_url": "index.html",
   "display": "standalone",
   "icons": [{
-    "src": "assets/img/logo.png",
+    "src": "assets/img/logo-square.png",
     "sizes": "512x512",
     "type": "image/png"
   }],
