@@ -7,6 +7,8 @@ import { AngularFire } from 'angularfire2';
 
 import { TabsPage } from '../pages/tabs/tabs';
 
+import {CacheService} from "ionic-cache/ionic-cache";
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -14,7 +16,8 @@ export class MyApp {
   rootPage:any;
 
   constructor(public platform: Platform, public statusBar: StatusBar,
-              public splashScreen: SplashScreen, public af: AngularFire) {
+              public splashScreen: SplashScreen, public af: AngularFire,
+              public cache: CacheService) {
     this.initializeApp();
   }
 
@@ -23,6 +26,8 @@ export class MyApp {
       this.getInitialPageToLoad().then((page) => {
         this.rootPage = page;
         this.statusBar.styleDefault();
+        // Defaults request cache to 1Hour
+        this.cache.setDefaultTTL(60 * 60);
       });
     });
   }

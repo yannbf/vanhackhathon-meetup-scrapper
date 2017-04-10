@@ -1,3 +1,4 @@
+import { CacheService } from 'ionic-cache/ionic-cache';
 import { Injectable } from '@angular/core';
 import { Http, Jsonp, URLSearchParams, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
@@ -45,9 +46,9 @@ export class MeetupData {
     WRITING              : 36,
   }
 
-  constructor(public http: Http, public jsonp: Jsonp) { }
+  constructor(public http: Http, public jsonp: Jsonp, public cache: CacheService) { }
 
-  get(endpoint: string, params?: any, jsonp: boolean = true, options?: RequestOptions) {
+  get(endpoint: string, params?: any, cacheKey?: string, jsonp: boolean = true, options?: RequestOptions) {
 
     options = new RequestOptions();
 
@@ -71,9 +72,9 @@ export class MeetupData {
     // Set the search field if we have params and don't already have
     // a search field set in options.
     options.search = !options.search && p || options.search;
-
-    return jsonp ? this.jsonp.request(endpoint, options).map(res => res.json())
+    let request = jsonp ? this.jsonp.request(endpoint, options).map(res => res.json())
                  : this.http.get("https://crossorigin.me/" + endpoint, options).map(res => res.json());
+    return this.cache.loadFromObservable(cacheKey, request);
   }
 
   getMeetups(topics, lat?, long?): any {
@@ -89,7 +90,9 @@ export class MeetupData {
       params['lon'] = long;
     }
 
-    return this.get(this.baseUrlV2 + 'open_events', params);
+    let endpoint = 'open_events';
+    let cacheKey = endpoint + JSON.stringify(params);
+    return this.get(this.baseUrlV2 + endpoint, params, cacheKey);
   }
 
   getMeetupGroups(topics, lat?, long?): any {
@@ -111,31 +114,32 @@ export class MeetupData {
     }
 
     let endpoint = "find/groups"
-    return this.get(this.baseUrlV1 + endpoint, params);
+    let cacheKey = endpoint + JSON.stringify(params);
+    return this.get(this.baseUrlV1 + endpoint, params, cacheKey);
   }
 
   getMeetupDetail(meetupUrl, eventId): any {
     let endpoint = `${meetupUrl}/events/${eventId}`;
-    return this.get(this.baseUrlV1 + endpoint);
+    return this.get(this.baseUrlV1 + endpoint, null, endpoint);
   }
 
   getMeetupHosts(meetupUrl, eventId): any{
     let endpoint = `${meetupUrl}/events/${eventId}/hosts`;
-    return this.get(this.baseUrlV1 + endpoint, null, false);
+    return this.get(this.baseUrlV1 + endpoint, null, endpoint, false);
   }
 
   getMeetupComments(meetupUrl, eventId): any {
     let endpoint = `${meetupUrl}/events/${eventId}/comments`;
-    return this.get(this.baseUrlV1 + endpoint, null, false);
+    return this.get(this.baseUrlV1 + endpoint, null, endpoint, false);
   }
 
   getMeetupGroupInfo(meetupUrl) {
-    return this.get(this.baseUrlV1 + meetupUrl);
+    return this.get(this.baseUrlV1 + meetupUrl, null, meetupUrl);
   }
 
   getMemberDetails(memberId){
     let endpoint = `member/${memberId}`;
-    return this.get(this.baseUrlV2 + endpoint, null, false);
+    return this.get(this.baseUrlV2 + endpoint, null, endpoint, false);
   }
 
 }

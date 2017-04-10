@@ -27,6 +27,8 @@ import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 
 import { Facebook } from '@ionic-native/facebook';
 
+import { CacheService } from "ionic-cache/ionic-cache";
+
 // AF2 Settings
 export const firebaseConfig = {
   apiKey: "AIzaSyA2WUdcpBjBLXWnWql-5YCmhB0Rne3L1jc",
@@ -102,6 +104,7 @@ export class GeolocationMock extends Geolocation {
     AlertService,
     LoadingService,
     Facebook,
+    CacheService,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     { provide: Geolocation, useClass: GeolocationMock }
   ]
