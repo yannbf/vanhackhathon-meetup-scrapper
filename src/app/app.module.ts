@@ -51,7 +51,7 @@ const appSettings = {
   pageTransition: 'ios'
 };
 
-class GeolocationMock extends Geolocation {
+export class GeolocationMock extends Geolocation {
   getCurrentPosition() {
     return new Promise((resolve, reject) => {
       // Always resolve to Chicago
