@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs/Rx';
 import { CacheService } from 'ionic-cache/ionic-cache';
 import { Injectable } from '@angular/core';
 import { Http, Jsonp, URLSearchParams, RequestOptions } from '@angular/http';
@@ -49,7 +50,6 @@ export class MeetupData {
   constructor(public http: Http, public jsonp: Jsonp, public cache: CacheService) { }
 
   get(endpoint: string, params?: any, cacheKey?: string, jsonp: boolean = true, options?: RequestOptions) {
-
     options = new RequestOptions();
 
     // Support easy query params for GET requests
@@ -95,27 +95,28 @@ export class MeetupData {
     return this.get(this.baseUrlV2 + endpoint, params, cacheKey);
   }
 
-  getMeetupGroups(topics, lat?, long?): any {
-    // let params = {
-    //   text     : topic,
-    //   order    : 'newest',
-    //   radius   : 'global',
-    //   category : this.CATEGORIES.TECH,
-    // }
+  fetchMeetupGroup(topic, lat, long){
     let params = {
-      // city     : city,
-      text     : topics || '',
+      text     : topic || '',
+      lat      : lat,
+      lon      : long,
       category : this.CATEGORIES.TECH,
-    }
-
-    if(lat && long){
-      params['lat'] = lat;
-      params['lon'] = long;
     }
 
     let endpoint = "find/groups"
     let cacheKey = endpoint + JSON.stringify(params);
     return this.get(this.baseUrlV1 + endpoint, params, cacheKey);
+  }
+
+  getMeetupGroups(topics, lat?, long?): any {
+    let requests: Observable<any>[] = [];
+    for(let i in topics.split(" ")){
+      requests.push(this.fetchMeetupGroup(topics[i], lat, long));
+    }
+    return Observable.forkJoin(requests).flatMap((result:any) => result.map(meetup => meetup.data));
+    // .subscribe( data => {
+    //   return data.map( val => val.data ).reduce((x, y) => x.concat(y));
+    // });
   }
 
   getMeetupDetail(meetupUrl, eventId): any {
@@ -135,6 +136,22 @@ export class MeetupData {
 
   getMeetupGroupInfo(meetupUrl) {
     return this.get(this.baseUrlV1 + meetupUrl, null, meetupUrl);
+  }
+
+  getGroupMembers(group) {
+    let params   = {
+      'group_id'      : group.id,
+      'group_urlname' : group.urlname
+    }
+
+    let endpoint = 'members';
+    let cacheKey = `members/${group.id}`;
+    return this.get(this.baseUrlV2 + endpoint, params, cacheKey);
+  }
+
+  getGroupEvents(groupUrl) {
+    let endpoint = `${groupUrl}/events/`;
+    return this.get(this.baseUrlV1 + endpoint, null, endpoint);
   }
 
   getMemberDetails(memberId){
