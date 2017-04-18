@@ -3,7 +3,10 @@
     <ion-title>{{ group.name }}</ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content class="primary-font" padding>
+<ion-content fullscreen class="primary-font" padding>
+  <div style="text-align: center">
+    <img style="height:35vh" [src]="group.group_photo?.photo_link" onerror="this.style.display='none'">
+  </div>
   <h2>{{ group.name }}</h2>
   <p>{{ group.city }} - {{ group.localized_country_name }}</p>
   <small class="wrap-bag"> Created on {{ group.created | date }} </small>
@@ -12,16 +15,18 @@
   <h3>Category: {{ group.category?.name }}</h3>
 
   <h3>Organizer:</h3>
-  <ion-item (click)="seeMemberDetails(organizer)">
-    <ion-avatar item-left>
-      <img [src]="group.organizer.photo?.thumb_link" onerror="this.src='../assets/icon/app-icon.png'">
-    </ion-avatar>
-    <h2>{{ group.organizer.name }}</h2>
-  </ion-item>
+  <ion-card class="mt-hosts">
+    <ion-item (click)="seeMemberDetails(organizer)">
+      <ion-avatar item-left>
+        <img [src]="group.organizer.photo?.thumb_link" onerror="this.src='../assets/icon/app-icon.png'">
+      </ion-avatar>
+      <h2>{{ group.organizer.name }}</h2>
+    </ion-item>
+  </ion-card>
 
-  <div id="meetups-section" *ngIf="meetups">
+  <div id="meetups-section" *ngIf="meetups.length > 0">
     <h3>Upcoming meetups:</h3>
-    <ion-slides padding spaceBetween="2" slidesPerView="2" style="height: 30vh">
+    <ion-slides padding spaceBetween="2" pager slidesPerView="1" style="height: 30vh">
       <ion-slide *ngFor="let meetup of meetups" style="border-radius: 5px">
         <ion-card (click)="goToMeetup(meetup)">
           <ion-card-header>
@@ -41,7 +46,7 @@
     </ion-slides>
   </div>
 
-  <h3>Members: {{ group.members }}</h3>
+  <h3>Members: <small>{{ group.members }}</small></h3>
   <ion-card class="mt-hosts" *ngFor="let member of members">
     <ion-item (click)="seeMemberDetails(member)">
       <ion-avatar item-left>

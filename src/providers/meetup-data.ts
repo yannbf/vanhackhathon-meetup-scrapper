@@ -74,7 +74,7 @@ export class MeetupData {
     options.search = !options.search && p || options.search;
     let request = jsonp ? this.jsonp.request(endpoint, options).map(res => res.json())
                  : this.http.get("https://crossorigin.me/" + endpoint, options).map(res => res.json());
-    return this.cache.loadFromObservable(cacheKey, request);
+    return this.cache.loadFromObservable(cacheKey, request).retry(4);
   }
 
   getMeetups(topics, lat?, long?): any {
@@ -90,7 +90,7 @@ export class MeetupData {
       params['lon'] = long;
     }
 
-    let endpoint = 'open_events';
+    let endpoint = 'ope1n_events';
     let cacheKey = endpoint + JSON.stringify(params);
     return this.get(this.baseUrlV2 + endpoint, params, cacheKey);
   }
