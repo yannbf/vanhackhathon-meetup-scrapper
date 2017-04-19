@@ -88,6 +88,9 @@ export class HomePage {
       console.log('slides per view', slidesPerView);
       this.categories.update();
     }, false);
+
+
+    this.alertCtrl.createWithError("Hey! Currently the meetup api is not working for meetups, only for groups. Please try the second tab on this filter.");
   }
 
   addTopic(topic){
