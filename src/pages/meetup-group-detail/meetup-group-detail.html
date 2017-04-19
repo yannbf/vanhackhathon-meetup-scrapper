@@ -16,7 +16,7 @@
 
   <h3>Organizer:</h3>
   <ion-card class="mt-hosts">
-    <ion-item (click)="seeMemberDetails(organizer)">
+    <ion-item (click)="seeMemberDetails(group.organizer)">
       <ion-avatar item-left>
         <img [src]="group.organizer.photo?.thumb_link" onerror="this.src='../assets/icon/app-icon.png'">
       </ion-avatar>
@@ -26,7 +26,7 @@
 
   <div id="meetups-section" *ngIf="meetups.length > 0">
     <h3>Upcoming meetups:</h3>
-    <ion-slides padding spaceBetween="2" pager slidesPerView="1" style="height: 30vh">
+    <ion-slides padding spaceBetween="2" autoplay="3000" slidesPerView="1" style="height: 30vh">
       <ion-slide *ngFor="let meetup of meetups" style="border-radius: 5px">
         <ion-card (click)="goToMeetup(meetup)">
           <ion-card-header>
@@ -47,7 +47,7 @@
   </div>
 
   <h3>Members: <small>{{ group.members }}</small></h3>
-  <ion-card class="mt-hosts" *ngFor="let member of members">
+  <ion-card class="mt-hosts" *ngFor="let member of membersList()">
     <ion-item (click)="seeMemberDetails(member)">
       <ion-avatar item-left>
         <img [src]="member.photo?.thumb_link" onerror="this.src='../assets/icon/app-icon.png'">
@@ -55,5 +55,6 @@
       <h2>{{ member.name }}</h2>
     </ion-item>
   </ion-card>
+  <button ion-button full color="dark" (click)="seeGroupMembers()">See all members</button>
 
 </ion-content>

@@ -1,3 +1,4 @@
+import { MemberListingPage } from '../member-listing/member-listing';
 import { MeetupDetail } from '../meetup-detail/meetup-detail';
 import { MemberDetailPage } from '../member-detail/member-detail';
 import { MeetupData } from '../../providers/meetup-data';
@@ -13,6 +14,7 @@ export class MeetupGroupDetailPage {
 
   group   : any = {};
   members : any = [];
+  allMembers : any = [];
   meetups : any = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
@@ -28,14 +30,25 @@ export class MeetupGroupDetailPage {
     });
   }
 
+  membersList() {
+    return this.members.filter((item, index) => index < 15 );
+  }
+
   getMeetups() {
     this.meetupData.getGroupEvents(this.group.urlname).subscribe(meetupsData => {
-      this.meetups = meetupsData.data;
+      this.meetups = meetupsData;
     });
   }
 
   seeMemberDetails(member) {
     this.navCtrl.push(MemberDetailPage, member.id);
+  }
+
+  seeGroupMembers(){
+    this.navCtrl.push(MemberListingPage, {
+      members   : this.members,
+      groupName : this.group.name
+    });
   }
 
   goToMeetup(meetup){

@@ -1,3 +1,4 @@
+import { MemberListingModule } from '../pages/member-listing/member-listing.module';
 import { MeetupGroupDetailModule } from '../pages/meetup-group-detail/meetup-group-detail.module';
 import { GroupsPage } from '../pages/groups/groups';
 import { MemberDetailModule } from '../pages/member-detail/member-detail.module';
@@ -85,6 +86,7 @@ export class GeolocationMock extends Geolocation {
     UserSettingsModule,
     MemberDetailModule,
     MeetupGroupDetailModule,
+    MemberListingModule,
     AuthModule,
     IonicModule.forRoot(MyApp, appSettings),
     AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),

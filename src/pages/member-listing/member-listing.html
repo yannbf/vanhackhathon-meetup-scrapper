@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{ groupName }}</ion-title>
+  </ion-navbar>
+  <ion-toolbar no-border-top>
+    <ion-searchbar placeholder="Member name" (ionInput)="getMember($event)"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen class="primary-font" padding>
+  <ion-card class="mt-hosts" *ngFor="let member of members">
+    <ion-item (click)="seeMemberDetails(member)">
+      <ion-avatar item-left>
+        <img [src]="member.photo?.thumb_link" onerror="this.src='../assets/icon/app-icon.png'">
+      </ion-avatar>
+      <h2>{{ member.name }}</h2>
+    </ion-item>
+  </ion-card>
+</ion-content>

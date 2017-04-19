@@ -1,8 +1,8 @@
-import { Observable } from 'rxjs/Rx';
 import { CacheService } from 'ionic-cache/ionic-cache';
 import { Injectable } from '@angular/core';
 import { Http, Jsonp, URLSearchParams, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs/Rx';
 
 @Injectable()
 export class MeetupData {
@@ -74,7 +74,7 @@ export class MeetupData {
     options.search = !options.search && p || options.search;
     let request = jsonp ? this.jsonp.request(endpoint, options).map(res => res.json())
                  : this.http.get("https://crossorigin.me/" + endpoint, options).map(res => res.json());
-    return this.cache.loadFromObservable(cacheKey, request).retry(4);
+    return this.cache.loadFromObservable(cacheKey, request);
   }
 
   getMeetups(topics, lat?, long?): any {
@@ -90,12 +90,12 @@ export class MeetupData {
       params['lon'] = long;
     }
 
-    let endpoint = 'ope1n_events';
+    let endpoint = 'open_events';
     let cacheKey = endpoint + JSON.stringify(params);
     return this.get(this.baseUrlV2 + endpoint, params, cacheKey);
   }
 
-  fetchMeetupGroup(topic, lat, long){
+  fetchMeetupGroup(topic, lat?, long?): any {
     let params = {
       text     : topic || '',
       lat      : lat,
@@ -143,7 +143,6 @@ export class MeetupData {
       'group_id'      : group.id,
       'group_urlname' : group.urlname
     }
-
     let endpoint = 'members';
     let cacheKey = `members/${group.id}`;
     return this.get(this.baseUrlV2 + endpoint, params, cacheKey);
