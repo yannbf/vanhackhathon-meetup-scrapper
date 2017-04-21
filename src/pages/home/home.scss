@@ -1,7 +1,4 @@
 page-home {
-  h3, .segment-button, p {
-    color: white !important;
-  }
 
   .selected-topics {
     overflow: auto;
@@ -22,9 +19,6 @@ page-home {
   }
 
   // @extend .primary-font;
-  ion-content .fixed-content {
-    background-color: #1e222d;
-  }
   .word-wrap {
     word-wrap: break-word;
     // overflow-x: hidden;
@@ -35,38 +29,12 @@ page-home {
     border-color: #ffffff !important;
     opacity: .7;
   }
-  .mt-header {
+  .mt-header .toolbar-background{
     background: transparentize(black, 0.5);
-    margin: 0;
     color: white;
   }
   .customTitle {
     padding: 35px 30px 25px 30px;
-  }
-  ion-card {
-    &.card-md, &.card-ios {
-
-      border-radius: 5px;
-      margin:30px;
-      width: calc(100% - 60px);
-      box-shadow: none;
-      background: #404654;
-      .card-header{
-        &.card-header-md, &.card-header-ios {
-          h1,h2,h3,h4,h5,h6 {
-            color: white;
-          }
-        }
-      }
-    }
-
-    ion-card-content {
-      &.card-content-md, &.card-content-ios {
-        h1,h2,h3,h4,h5,h6, p {
-          color: white;
-        }
-      }
-    }
   }
 
   .fab{
@@ -74,12 +42,4 @@ page-home {
   }
 }
 
-ion-tabs > div.tabbar.show-tabbar {
-  background: darken(#404654, 10%);
-  a.tab-button[aria-selected=true] .tab-button-icon {
-    color: white;
-  }
-  a.tab-button, a.tab-button ion-icon {
-    color : white;
-  }
-}
+

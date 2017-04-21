@@ -2,11 +2,10 @@ import { AlertService } from '../../providers/util/alert.service';
 import { AuthData } from '../../providers/auth-data';
 import { LoadingService } from '../../providers/util/loading.service';
 import { MeetupFirebaseData } from '../../providers/meetup-firebase-data';
-import { MeetupDetailPage } from '../meetup-detail/meetup-detail';
 import { MeetupData } from '../../providers/meetup-data';
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation';
-import { App, NavController, Platform, Slides, IonicPage } from 'ionic-angular';
+import { App, NavController, Platform, Slides, IonicPage, Content } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 
 declare var google: any;
@@ -18,6 +17,7 @@ declare var google: any;
 })
 export class HomePage {
   @ViewChild('searchbar', { read: ElementRef }) searchbar: ElementRef;
+  @ViewChild('mycontent') content: Content;
   @ViewChild(Slides) categories : Slides;
   addressElement: HTMLInputElement;
 
@@ -31,6 +31,7 @@ export class HomePage {
   lat                = null;
   long               = null;
   view : string      = "meetups";
+  dataWasChanged     = false;
 
   topics = [{
     name: 'Ionic',
@@ -92,12 +93,14 @@ export class HomePage {
   addTopic(topic){
     if(this.selectedTopics.indexOf(topic) === -1){
       this.selectedTopics.push(topic);
+      this.dataWasChanged = true;
       this.loadData();
     }
   }
 
   deleteTopic(topic) {
     this.selectedTopics.splice(this.selectedTopics.indexOf(topic),1);
+    this.dataWasChanged = true;
     this.loadData();
   }
 
@@ -147,10 +150,12 @@ export class HomePage {
   }
 
   loadData() {
-    if(this.view == 'meetups'){
-      this.loadEvents();
-    } else {
-      this.loadGroups();
+    if(this.dataWasChanged){
+      if(this.view == 'meetups'){
+        this.loadEvents();
+      } else {
+        this.loadGroups();
+      }
     }
   }
 
@@ -162,6 +167,7 @@ export class HomePage {
         this.meetupCount = meetupData.meta.total_count;
         // this.nextUrl = meetupData.meta.
         this.events = meetupData.results;
+        this.dataWasChanged = false;
       });
     });
   }
@@ -173,6 +179,7 @@ export class HomePage {
       this.loadingCtrl.dismiss().then(() => {
         this.meetupCount = groupsData.length;
         this.groups = groupsData;
+        this.dataWasChanged = false;
       });
     }, error => {
       console.log('groups error', error);
@@ -186,17 +193,5 @@ export class HomePage {
 
   goToDetail(meetup){
     this.app.getRootNav().push('MeetupDetailPage', meetup);
-  }
-
-  logout() {
-    this.alertCtrl.createWithCallback("Are you sure?",
-      "This will log you out of this application.", true).then((yes) => {
-      if (yes) {
-        this.authData.logoutUser().then((result) => {
-          this.app.getRootNav().setRoot('LoginPage');
-        }, (error) => {
-        });
-      }
-    });
   }
 }

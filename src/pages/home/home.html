@@ -1,8 +1,6 @@
-<ion-header>
+<ion-header class="mt-header">
   <ion-searchbar #searchbar placeholder="Search city or address" [hidden]="!search"></ion-searchbar>
-</ion-header>
-<ion-content class="primary-font">
-  <div class="mt-header">
+  <expandable-header [scrollArea]="mycontent" headerHeight="125">
     <div class="customTitle">
       <h1 *ngIf="view == 'meetups'">Upcoming Meetups</h1>
       <h1 *ngIf="view == 'groups'">Meetup Groups</h1>
@@ -11,6 +9,8 @@
         <span *ngIf="location">{{location}}</span>
       </h6>
     </div>
+  </expandable-header>
+  <ion-toolbar color="none">
     <ion-segment [(ngModel)]="view" mode="md">
       <ion-segment-button value="meetups" ion-text color="white" (ionSelect)="loadEvents()">
         Meetups
@@ -19,7 +19,9 @@
         Groups
       </ion-segment-button>
     </ion-segment>
-  </div>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="primary-font" fullscreen #mycontent>
   <div padding class="selected-topics">
     <ion-chip *ngFor="let topic of selectedTopics">
       <ion-label>{{ topic }}</ion-label>
