@@ -17,7 +17,7 @@
     <ion-card class="mt-hosts" *ngFor="let host of hosts">
       <ion-item (click)="seeMemberDetails(host)">
         <ion-avatar item-left>
-          <img [src]="host.photo?.thumb_link">
+          <img [src]="host.photo?.thumb_link" onerror="this.src='../assets/icon/app-icon.png'">
         </ion-avatar>
         <h2>{{ host.name }} - {{ host.group_profile?.role }}</h2>
         <p>{{ host.bio }}</p>
@@ -30,7 +30,7 @@
         <ion-card-header>
           <ion-item>
             <ion-avatar item-left>
-              <img [src]="comment.member?.photo?.thumb_link">
+              <img [src]="comment.member?.photo?.thumb_link" onerror="this.src='../assets/icon/app-icon.png'">
             </ion-avatar>
             <h2>{{ comment.member?.name }}</h2>
           </ion-item>
@@ -43,7 +43,7 @@
           <ion-card-header>
             <ion-item>
               <ion-avatar item-left>
-                <img [src]="reply.member?.photo?.thumb_link">
+                <img [src]="reply.member?.photo?.thumb_link" onerror="this.src='../assets/icon/app-icon.png'">
               </ion-avatar>
               <h2>{{ reply.member?.name }} - {{ reply.member?.role }}</h2>
             </ion-item>

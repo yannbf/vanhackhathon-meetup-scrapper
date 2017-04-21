@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{ group.name }}</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content fullscreen class="primary-font" padding>
+  <div style="text-align: center">
+    <img style="height:35vh" [src]="group.group_photo?.photo_link" onerror="this.style.display='none'">
+  </div>
+  <h2>{{ group.name }}</h2>
+  <p>{{ group.city }} - {{ group.localized_country_name }}</p>
+  <small class="wrap-bag"> Created on {{ group.created | date }} </small>
+  <div [innerHTML]="group.description"></div>
+
+  <h3>Category: {{ group.category?.name }}</h3>
+
+  <h3>Organizer:</h3>
+  <ion-card class="mt-hosts">
+    <ion-item (click)="seeMemberDetails(group.organizer)">
+      <ion-avatar item-left>
+        <img [src]="group.organizer.photo?.thumb_link" onerror="this.src='../assets/icon/app-icon.png'">
+      </ion-avatar>
+      <h2>{{ group.organizer.name }}</h2>
+    </ion-item>
+  </ion-card>
+
+  <div id="meetups-section" *ngIf="meetups.length > 0">
+    <h3>Upcoming meetups:</h3>
+    <ion-slides padding spaceBetween="2" autoplay="3000" slidesPerView="1" style="height: 30vh">
+      <ion-slide *ngFor="let meetup of meetups" style="border-radius: 5px">
+        <ion-card (click)="goToMeetup(meetup)">
+          <ion-card-header>
+            <h2 class="word-wrap secondary-font" [innerHTML]="meetup.name"></h2>
+          </ion-card-header>
+          <ion-card-content>
+            <small class="semi-transparent">on {{meetup.time | date}}</small>
+            <h6 class="secondary-font">At
+              <span *ngIf="!meetup.venue?.name">Undisclosed</span>
+              <span *ngIf="meetup.venue?.name">{{meetup.venue?.name}}</span>
+              <span *ngIf="!meetup.venue?.address_1"></span>
+              <span *ngIf="meetup.venue?.address_1"> , {{meetup.venue?.address_1}}</span>
+            </h6>
+          </ion-card-content>
+        </ion-card>
+      </ion-slide>
+    </ion-slides>
+  </div>
+
+  <h3>Members: <small>{{ group.members }}</small></h3>
+  <ion-card class="mt-hosts" *ngFor="let member of membersList()">
+    <ion-item (click)="seeMemberDetails(member)">
+      <ion-avatar item-left>
+        <img [src]="member.photo?.thumb_link" onerror="this.src='../assets/icon/app-icon.png'">
+      </ion-avatar>
+      <h2>{{ member.name }}</h2>
+    </ion-item>
+  </ion-card>
+  <button ion-button full color="dark" (click)="seeGroupMembers()">See all members</button>
+
+</ion-content>

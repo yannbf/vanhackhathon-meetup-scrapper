@@ -1,3 +1,4 @@
+import { MeetupGroupDetailPage } from '../meetup-group-detail/meetup-group-detail';
 import { AlertService } from '../../providers/util/alert.service';
 import { LoginPage } from '../auth/login/login';
 import { AuthData } from '../../providers/auth-data';
@@ -7,7 +8,7 @@ import { MeetupDetail } from '../meetup-detail/meetup-detail';
 import { MeetupData } from '../../providers/meetup-data';
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation';
-import { App, NavController, Platform } from 'ionic-angular';
+import { App, NavController, Platform, Slides } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 
 declare var google: any;
@@ -18,6 +19,7 @@ declare var google: any;
 })
 export class HomePage {
   @ViewChild('searchbar', { read: ElementRef }) searchbar: ElementRef;
+  @ViewChild(Slides) categories : Slides;
   addressElement: HTMLInputElement;
 
   listSearch: string = '';
@@ -71,7 +73,24 @@ export class HomePage {
       this.lat  = position.coords.latitude;
       this.long = position.coords.longitude;
       this.loadData();
+    }, error => {
+      this.lat  = 41.8769925;
+      this.long = -87.6980273;
+      this.loadData();
     });
+  }
+
+  ngOnInit(){
+    window.addEventListener('resize', () => {
+      let width                     = this.platform.width();
+      let slidesPerView             = Math.floor(width / 125);
+      this.categories.slidesPerView = slidesPerView;
+      console.log('slides per view', slidesPerView);
+      this.categories.update();
+    }, false);
+
+
+    this.alertCtrl.createWithError("Hey! Currently the meetup api is not working for meetups, only for groups. Please try the second tab on this filter.");
   }
 
   addTopic(topic){
@@ -156,11 +175,17 @@ export class HomePage {
     let topics = this.selectedTopics.join(' ');
     this.meetupProvider.getMeetupGroups(topics, this.lat, this.long).subscribe(groupsData => {
       this.loadingCtrl.dismiss().then(() => {
-        this.meetupCount = groupsData.meta.total_count;
-        // this.nextUrl = groupsData.meta.
-        this.groups = groupsData.data;
+        this.meetupCount = groupsData.length;
+        this.groups = groupsData;
       });
+    }, error => {
+      console.log('groups error', error);
+      this.alertCtrl.createWithError("There was an error fetching the meetup groups. Please try again.");
     });
+  }
+
+  goToGroup(group){
+    this.app.getRootNav().push(MeetupGroupDetailPage, group);
   }
 
   goToDetail(meetup){

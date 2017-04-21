@@ -27,6 +27,14 @@ export class LoginPage {
       Validators.required])],
     });
     splashscreen.hide();
+    alertCtrl.create("Meetapp",  `
+        <p> Hey! Thanks for trying meetapp out. If you don't want to create an account, go on and login using:</p>
+        <ul>
+          <li>Username: a@a.com</li>
+          <li>Password: asdasd</li>
+        </ul>
+        <p style="float:right">Enjoy!</p>
+      `);
   }
 
   login() {

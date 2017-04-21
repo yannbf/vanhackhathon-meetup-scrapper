@@ -1,3 +1,5 @@
+import { MemberListingModule } from '../pages/member-listing/member-listing.module';
+import { MeetupGroupDetailModule } from '../pages/meetup-group-detail/meetup-group-detail.module';
 import { GroupsPage } from '../pages/groups/groups';
 import { MemberDetailModule } from '../pages/member-detail/member-detail.module';
 import { UserSettingsModule } from '../pages/user-settings/user-settings.module';
@@ -26,6 +28,8 @@ import { Geolocation } from '@ionic-native/geolocation'
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 
 import { Facebook } from '@ionic-native/facebook';
+
+import { CacheService } from "ionic-cache/ionic-cache";
 
 // AF2 Settings
 export const firebaseConfig = {
@@ -77,6 +81,8 @@ export class GeolocationMock extends Geolocation {
     MeetupDetailModule,
     UserSettingsModule,
     MemberDetailModule,
+    MeetupGroupDetailModule,
+    MemberListingModule,
     AuthModule,
     IonicModule.forRoot(MyApp, appSettings),
     AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
@@ -94,8 +100,9 @@ export class GeolocationMock extends Geolocation {
     AlertService,
     LoadingService,
     Facebook,
+    CacheService,
+    Geolocation,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    { provide: Geolocation, useClass: GeolocationMock }
   ]
 })
 export class AppModule {}
