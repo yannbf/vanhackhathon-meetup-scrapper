@@ -22,7 +22,7 @@ export class UserSettingsPage {
       "This will log you out of this application.", true).then((yes) => {
       if (yes) {
         this.authData.logoutUser().then((result) => {
-          this.app.getRootNav().setRoot(LoginPage);
+          this.app.getRootNav().setRoot('LoginPage');
         }, (error) => {
         });
       }

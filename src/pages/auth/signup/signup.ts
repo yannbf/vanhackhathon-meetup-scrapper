@@ -57,7 +57,7 @@ export class SignupPage {
       let { email, password, firstName, lastName } = this.signupForm.value;
       this.authData.signupUser(email, password, firstName, lastName).then(() => {
         this.loadingCtrl.dismiss().then(() => {
-          this.navCtrl.setRoot(TabsPage);
+          this.navCtrl.setRoot('TabsPage');
         });
       }, (error) => {
         this.loadingCtrl.dismiss().then(() => {

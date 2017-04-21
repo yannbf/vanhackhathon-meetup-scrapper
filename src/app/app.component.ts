@@ -21,6 +21,7 @@ export class MyApp {
   initializeApp(){
     this.platform.ready().then(() => {
       this.getInitialPageToLoad().then((page) => {
+        console.log(page);
         this.rootPage = page;
         this.statusBar.styleDefault();
       });
@@ -31,10 +32,10 @@ export class MyApp {
     return new Promise((resolve, reject) => {
       const unsubscribe = this.af.auth.subscribe(user => {
         if (user) {
-          resolve(TabsPage);
+          resolve('TabsPage');
           unsubscribe.unsubscribe();
         } else {
-          resolve(LoginPage);
+          resolve('LoginPage');
           unsubscribe.unsubscribe();
         }
       });

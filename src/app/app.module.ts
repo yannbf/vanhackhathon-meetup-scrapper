@@ -69,10 +69,6 @@ export class GeolocationMock extends Geolocation {
 @NgModule({
   declarations: [
     MyApp,
-    GroupsPage,
-    ContactPage,
-    HomePage,
-    TabsPage
   ],
   imports: [
     BrowserModule,
@@ -88,10 +84,6 @@ export class GeolocationMock extends Geolocation {
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    GroupsPage,
-    ContactPage,
-    HomePage,
-    TabsPage
   ],
   providers: [
     MeetupData,

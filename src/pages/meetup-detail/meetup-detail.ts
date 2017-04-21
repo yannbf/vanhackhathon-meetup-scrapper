@@ -48,7 +48,7 @@ export class MeetupDetail {
   }
 
   seeMemberDetails(host){
-    this.navCtrl.push(MemberDetailPage, host.id);
+    this.navCtrl.push('MemberDetailPage', host.id);
   }
 
   initializeMap() {

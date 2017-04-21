@@ -10,11 +10,12 @@ import { HomePage } from '../home/home';
 })
 export class TabsPage {
 
-  tab1Root = HomePage;
-  tab2Root = GroupsPage;
-  tab3Root = UserSettingsPage;
+  tab1Root = 'HomePage';
+  tab2Root = 'GroupsPage';
+  tab3Root = 'UserSettingsPage';
 
   constructor(public splashscreen: SplashScreen) {
+    console.log(123)
       splashscreen.hide();
   }
 }

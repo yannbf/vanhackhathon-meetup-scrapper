@@ -78,11 +78,11 @@ export class LoginPage {
   }
 
   goToHome() {
-    this.navCtrl.setRoot(TabsPage);
+    this.navCtrl.setRoot('TabsPage');
   }
 
   goToSignup() {
-    this.navCtrl.push(SignupPage);
+    this.navCtrl.push('SignupPage');
   }
 
 }
