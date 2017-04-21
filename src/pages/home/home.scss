@@ -1,5 +1,9 @@
 page-home {
 
+  ion-searchbar {
+    position: absolute;
+  }
+
   .selected-topics {
     overflow: auto;
     display: flex;
