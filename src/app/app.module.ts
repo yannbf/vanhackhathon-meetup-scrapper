@@ -1,22 +1,14 @@
-import { GroupsPage } from '../pages/groups/groups';
-import { MemberDetailModule } from '../pages/member-detail/member-detail.module';
-import { UserSettingsModule } from '../pages/user-settings/user-settings.module';
 import { LoadingService } from '../providers/util/loading.service';
 import { AlertService } from '../providers/util/alert.service';
 import { ToastService } from '../providers/util/toast.service';
 import { AuthModule } from '../pages/auth/auth.module';
 import { MeetupFirebaseData } from '../providers/meetup-firebase-data';
-import { MeetupDetailModule } from '../pages/meetup-detail/meetup-detail.module';
 import { MeetupData } from '../providers/meetup-data';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule, JsonpModule } from '@angular/http';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
-
-import { ContactPage } from '../pages/contact/contact';
-import { HomePage } from '../pages/home/home';
-import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -26,6 +18,8 @@ import { Geolocation } from '@ionic-native/geolocation'
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 
 import { Facebook } from '@ionic-native/facebook';
+
+import { CacheService } from "ionic-cache/ionic-cache";
 
 // AF2 Settings
 export const firebaseConfig = {
@@ -51,21 +45,6 @@ const appSettings = {
   pageTransition: 'ios'
 };
 
-export class GeolocationMock extends Geolocation {
-  getCurrentPosition() {
-    return new Promise((resolve, reject) => {
-      // Always resolve to Chicago
-      let resp = {
-        coords: {
-          latitude  : 41.8769925,
-          longitude : -87.6980273
-        }
-      }
-      resolve(resp);
-    })
-  }
-}
-
 @NgModule({
   declarations: [
     MyApp,
@@ -74,9 +53,6 @@ export class GeolocationMock extends Geolocation {
     BrowserModule,
     HttpModule,
     JsonpModule,
-    MeetupDetailModule,
-    UserSettingsModule,
-    MemberDetailModule,
     AuthModule,
     IonicModule.forRoot(MyApp, appSettings),
     AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
@@ -94,8 +70,9 @@ export class GeolocationMock extends Geolocation {
     AlertService,
     LoadingService,
     Facebook,
+    CacheService,
+    Geolocation,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    { provide: Geolocation, useClass: GeolocationMock }
   ]
 })
 export class AppModule {}

@@ -1,10 +1,8 @@
-import { GroupsPage } from '../groups/groups';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { UserSettingsPage } from '../user-settings/user-settings';
 import { Component } from '@angular/core';
+import { IonicPage } from 'ionic-angular';
 
-import { HomePage } from '../home/home';
-
+@IonicPage()
 @Component({
   templateUrl: 'tabs.html'
 })

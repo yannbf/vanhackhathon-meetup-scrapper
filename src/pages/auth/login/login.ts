@@ -1,11 +1,9 @@
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { TabsPage } from '../../tabs/tabs';
 import { AuthData } from '../../../providers/auth-data';
 import { LoadingService } from '../../../providers/util/loading.service';
 import { AlertService } from '../../../providers/util/alert.service';
 import { ToastService } from '../../../providers/util/toast.service';
 import { FormBuilder, Validators } from '@angular/forms';
-import { SignupPage } from '../signup/signup';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
@@ -27,6 +25,15 @@ export class LoginPage {
       Validators.required])],
     });
     splashscreen.hide();
+    console.log('hey');
+    alertCtrl.create("Meetapp",  `
+        <p> Hey! Thanks for trying meetapp out. If you don't want to create an account, go on and login using:</p>
+        <ul>
+          <li>Username: a@a.com</li>
+          <li>Password: asdasd</li>
+        </ul>
+        <p style="float:right">Enjoy!</p>
+      `);
   }
 
   login() {

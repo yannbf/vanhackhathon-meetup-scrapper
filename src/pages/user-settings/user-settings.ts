@@ -1,4 +1,3 @@
-import { LoginPage } from '../auth/login/login';
 import { AuthData } from '../../providers/auth-data';
 import { AlertService } from '../../providers/util/alert.service';
 import { Component } from '@angular/core';

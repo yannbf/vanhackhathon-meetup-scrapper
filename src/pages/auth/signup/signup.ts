@@ -1,4 +1,3 @@
-import { TabsPage } from '../../tabs/tabs';
 import { AuthData } from '../../../providers/auth-data';
 import { AlertService } from '../../../providers/util/alert.service';
 import { LoadingService } from '../../../providers/util/loading.service';

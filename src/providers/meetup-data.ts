@@ -1,6 +1,8 @@
+import { CacheService } from 'ionic-cache/ionic-cache';
 import { Injectable } from '@angular/core';
 import { Http, Jsonp, URLSearchParams, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs/Rx';
 
 @Injectable()
 export class MeetupData {
@@ -45,10 +47,9 @@ export class MeetupData {
     WRITING              : 36,
   }
 
-  constructor(public http: Http, public jsonp: Jsonp) { }
+  constructor(public http: Http, public jsonp: Jsonp, public cache: CacheService) { }
 
-  get(endpoint: string, params?: any, jsonp: boolean = true, options?: RequestOptions) {
-
+  get(endpoint: string, params?: any, cacheKey?: string, jsonp: boolean = true, options?: RequestOptions) {
     options = new RequestOptions();
 
     // Support easy query params for GET requests
@@ -71,9 +72,9 @@ export class MeetupData {
     // Set the search field if we have params and don't already have
     // a search field set in options.
     options.search = !options.search && p || options.search;
-
-    return jsonp ? this.jsonp.request(endpoint, options).map(res => res.json())
+    let request = jsonp ? this.jsonp.request(endpoint, options).map(res => res.json())
                  : this.http.get("https://crossorigin.me/" + endpoint, options).map(res => res.json());
+    return this.cache.loadFromObservable(cacheKey, request);
   }
 
   getMeetups(topics, lat?, long?): any {
@@ -89,53 +90,72 @@ export class MeetupData {
       params['lon'] = long;
     }
 
-    return this.get(this.baseUrlV2 + 'open_events', params);
+    let endpoint = 'open_events';
+    let cacheKey = endpoint + JSON.stringify(params);
+    return this.get(this.baseUrlV2 + endpoint, params, cacheKey);
   }
 
-  getMeetupGroups(topics, lat?, long?): any {
-    // let params = {
-    //   text     : topic,
-    //   order    : 'newest',
-    //   radius   : 'global',
-    //   category : this.CATEGORIES.TECH,
-    // }
+  fetchMeetupGroup(topic, lat?, long?): any {
     let params = {
-      // city     : city,
-      text     : topics || '',
+      text     : topic || '',
+      lat      : lat,
+      lon      : long,
       category : this.CATEGORIES.TECH,
     }
 
-    if(lat && long){
-      params['lat'] = lat;
-      params['lon'] = long;
-    }
-
     let endpoint = "find/groups"
-    return this.get(this.baseUrlV1 + endpoint, params);
+    let cacheKey = endpoint + JSON.stringify(params);
+    return this.get(this.baseUrlV1 + endpoint, params, cacheKey);
+  }
+
+  getMeetupGroups(topics, lat?, long?): any {
+    let requests: Observable<any>[] = [];
+    for(let i in topics.split(" ")){
+      requests.push(this.fetchMeetupGroup(topics[i], lat, long));
+    }
+    return Observable.forkJoin(requests).flatMap((result:any) => result.map(meetup => meetup.data));
+    // .subscribe( data => {
+    //   return data.map( val => val.data ).reduce((x, y) => x.concat(y));
+    // });
   }
 
   getMeetupDetail(meetupUrl, eventId): any {
     let endpoint = `${meetupUrl}/events/${eventId}`;
-    return this.get(this.baseUrlV1 + endpoint);
+    return this.get(this.baseUrlV1 + endpoint, null, endpoint);
   }
 
   getMeetupHosts(meetupUrl, eventId): any{
     let endpoint = `${meetupUrl}/events/${eventId}/hosts`;
-    return this.get(this.baseUrlV1 + endpoint, null, false);
+    return this.get(this.baseUrlV1 + endpoint, null, endpoint, false);
   }
 
   getMeetupComments(meetupUrl, eventId): any {
     let endpoint = `${meetupUrl}/events/${eventId}/comments`;
-    return this.get(this.baseUrlV1 + endpoint, null, false);
+    return this.get(this.baseUrlV1 + endpoint, null, endpoint, false);
   }
 
   getMeetupGroupInfo(meetupUrl) {
-    return this.get(this.baseUrlV1 + meetupUrl);
+    return this.get(this.baseUrlV1 + meetupUrl, null, meetupUrl);
+  }
+
+  getGroupMembers(group) {
+    let params   = {
+      'group_id'      : group.id,
+      'group_urlname' : group.urlname
+    }
+    let endpoint = 'members';
+    let cacheKey = `members/${group.id}`;
+    return this.get(this.baseUrlV2 + endpoint, params, cacheKey);
+  }
+
+  getGroupEvents(groupUrl) {
+    let endpoint = `${groupUrl}/events/`;
+    return this.get(this.baseUrlV1 + endpoint, null, endpoint);
   }
 
   getMemberDetails(memberId){
     let endpoint = `member/${memberId}`;
-    return this.get(this.baseUrlV2 + endpoint, null, false);
+    return this.get(this.baseUrlV2 + endpoint, null, endpoint, false);
   }
 
 }

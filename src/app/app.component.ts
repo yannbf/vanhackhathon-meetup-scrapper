@@ -1,11 +1,10 @@
-import { LoginPage } from '../pages/auth/login/login';
 import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AngularFire } from 'angularfire2';
 
-import { TabsPage } from '../pages/tabs/tabs';
+import { CacheService } from "ionic-cache/ionic-cache";
 
 @Component({
   templateUrl: 'app.html'
@@ -14,16 +13,18 @@ export class MyApp {
   rootPage:any;
 
   constructor(public platform: Platform, public statusBar: StatusBar,
-              public splashScreen: SplashScreen, public af: AngularFire) {
+              public splashScreen: SplashScreen, public af: AngularFire,
+              public cache: CacheService) {
     this.initializeApp();
   }
 
   initializeApp(){
     this.platform.ready().then(() => {
       this.getInitialPageToLoad().then((page) => {
-        console.log(page);
         this.rootPage = page;
         this.statusBar.styleDefault();
+        // Defaults request cache to 1Hour
+        this.cache.setDefaultTTL(60 * 60);
       });
     });
   }

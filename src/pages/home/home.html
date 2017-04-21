@@ -11,7 +11,7 @@
         <span *ngIf="location">{{location}}</span>
       </h6>
     </div>
-    <ion-segment [(ngModel)]="view">
+    <ion-segment [(ngModel)]="view" mode="md">
       <ion-segment-button value="meetups" ion-text color="white" (ionSelect)="loadEvents()">
         Meetups
       </ion-segment-button>
@@ -28,7 +28,7 @@
       </button>
     </ion-chip>
   </div>
-  <ion-slides padding spaceBetween="10" slidesPerView="3" style="height: 20vh">
+  <ion-slides padding paginationType autoplay="3000" loop spaceBetween="10" slidesPerView="3" style="height: 20vh">
 		<ion-slide *ngFor="let topic of topics" style="border-radius: 5px"
         [ngStyle]="{'background': 'linear-gradient(283deg, #CFD4DE, '+topic.color+')'}"
         (click)="addTopic(topic.name)">
@@ -36,27 +36,24 @@
       <span class="white">{{ topic.name }}</span>
     </ion-slide>
   </ion-slides>
-  <div *ngIf="events.length <= 0" style="width: 100%; text-align: center">
-    <h3>There are currently no events.</h3>
-  </div>
   <div *ngIf="view == 'meetups'">
-    <ion-card *ngFor="let event of events" (click)="goToDetail(event)">
-      <ion-card-header>
-        <h2 class="word-wrap secondary-font" [innerHTML]="event.name"></h2>
-      </ion-card-header>
-      <ion-card-content>
-        <small class="semi-transparent">on {{event.time | date}}</small>
-        <h6 class="secondary-font">At
-          <span *ngIf="!event.venue?.name">Undisclosed</span>
-          <span *ngIf="event.venue?.name">{{event.venue?.name}}</span>
-          <span *ngIf="!event.venue?.address_1"></span>
-          <span *ngIf="event.venue?.address_1"> , {{event.venue?.address_1}}</span>
-        </h6>
-      </ion-card-content>
-    </ion-card>
+      <ion-card *ngFor="let event of events"  (click)="goToDetail(event)">
+        <ion-card-header>
+          <h2 class="word-wrap secondary-font" [innerHTML]="event.name"></h2>
+        </ion-card-header>
+        <ion-card-content>
+          <small class="semi-transparent">on {{event.time | date}}</small>
+          <h6 class="secondary-font">At
+            <span *ngIf="!event.venue?.name">Undisclosed</span>
+            <span *ngIf="event.venue?.name">{{event.venue?.name}}</span>
+            <span *ngIf="!event.venue?.address_1"></span>
+            <span *ngIf="event.venue?.address_1"> , {{event.venue?.address_1}}</span>
+          </h6>
+        </ion-card-content>
+      </ion-card>
   </div>
   <div *ngIf="view == 'groups'">
-    <ion-card *ngFor="let group of groups">
+    <ion-card *ngFor="let group of groups" (click)="goToGroup(group)">
       <ion-card-header>
         <img style="width:20vw" [src]="group.group_photo?.thumb_link" onerror="this.style.display='none'">
         <h2 class="word-wrap" [innerHTML]="group.name"></h2>
@@ -69,6 +66,12 @@
         <p>Members: {{ group.members }}</p>
       </ion-card-content>
     </ion-card>
+  </div>
+  <div *ngIf="view == 'meetups' && events.length <= 0" style="width: 100%; text-align: center">
+    <p>There are currently no meetups for this search. Try searching other places!</p>
+  </div>
+  <div *ngIf="view == 'groups' && groups.length <= 0" style="width: 100%; text-align: center">
+    <h3>There are currently no groups.</h3>
   </div>
   <ion-fab right bottom (click)="toggleSearch()">
     <button ion-fab class="pop-in">

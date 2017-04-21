@@ -1,4 +1,3 @@
-import { MemberDetailPage } from '../member-detail/member-detail';
 import { MeetupData } from '../../providers/meetup-data';
 import { Component, NgZone, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
@@ -10,7 +9,7 @@ declare var google: any;
   selector: 'page-meetup-detail',
   templateUrl: 'meetup-detail.html',
 })
-export class MeetupDetail {
+export class MeetupDetailPage {
   @ViewChild('map') mapElement: ElementRef;
 
   map: any;
