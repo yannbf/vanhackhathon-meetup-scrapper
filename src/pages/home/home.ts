@@ -3,9 +3,9 @@ import { AuthData } from '../../providers/auth-data';
 import { LoadingService } from '../../providers/util/loading.service';
 import { MeetupFirebaseData } from '../../providers/meetup-firebase-data';
 import { MeetupData } from '../../providers/meetup-data';
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, Renderer } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation';
-import { App, NavController, Platform, Slides, IonicPage, Content } from 'ionic-angular';
+import { App, NavController, Platform, Slides, IonicPage, Content, Searchbar } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 
 declare var google: any;
@@ -16,7 +16,8 @@ declare var google: any;
   templateUrl: 'home.html'
 })
 export class HomePage {
-  @ViewChild('searchbar', { read: ElementRef }) searchbar: ElementRef;
+  @ViewChild('searchbar', { read: ElementRef }) searchbarRef: ElementRef;
+  @ViewChild('searchbar') searchbarElement: Searchbar;
   @ViewChild('mycontent') content: Content;
   @ViewChild(Slides) categories : Slides;
   addressElement: HTMLInputElement;
@@ -68,7 +69,7 @@ export class HomePage {
               public meetupProvider: MeetupData, public firebaseData: MeetupFirebaseData,
               public authData: AuthData, public loadingCtrl: LoadingService,
               public alertCtrl: AlertService, public platform: Platform,
-              public geolocation: Geolocation) {
+              public geolocation: Geolocation, public renderer: Renderer) {
     this.geolocation.getCurrentPosition().then(position => {
       this.lat  = position.coords.latitude;
       this.long = position.coords.longitude;
@@ -85,7 +86,6 @@ export class HomePage {
       let width                     = this.platform.width();
       let slidesPerView             = Math.floor(width / 125);
       this.categories.slidesPerView = slidesPerView;
-      console.log('slides per view', slidesPerView);
       this.categories.update();
     }, false);
   }
@@ -115,7 +115,7 @@ export class HomePage {
   }
 
   initAutocomplete(): void {
-    this.addressElement = this.searchbar.nativeElement.querySelector('.searchbar-input');
+    this.addressElement = this.searchbarRef.nativeElement.querySelector('.searchbar-input');
     this.createAutocomplete(this.addressElement).subscribe((location) => {
       this.lat    = location.lat();
       this.long   = location.lng();
@@ -146,16 +146,15 @@ export class HomePage {
       this.search = false;
     } else {
       this.search = true;
+      this.searchbarElement.setFocus();
     }
   }
 
   loadData() {
-    if(this.dataWasChanged){
-      if(this.view == 'meetups'){
-        this.loadEvents();
-      } else {
-        this.loadGroups();
-      }
+    if(this.view == 'meetups'){
+      this.loadEvents();
+    } else {
+      this.loadGroups();
     }
   }
 
@@ -194,4 +193,15 @@ export class HomePage {
   goToDetail(meetup){
     this.app.getRootNav().push('MeetupDetailPage', meetup);
   }
+
+  // hideSearchBar(){
+    // if(this.search){
+    //   let opacity = 1 - (this.content.scrollTop/115);
+    //   this.renderer.setElementStyle(this.searchbar.nativeElement, 'margin-top', (50 * opacity * -1) + 'px');
+    //   if(opacity <= 0){
+    //     opacity = 0;
+    //   }
+    //   // this.renderer.setElementStyle(this.searchbar.nativeElement, 'opacity', opacity.toString());
+    // }
+  // }
 }

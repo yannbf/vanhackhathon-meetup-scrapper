@@ -2,6 +2,7 @@ page-home {
 
   ion-searchbar {
     position: absolute;
+    z-index: 11;
   }
 
   .selected-topics {

@@ -13,7 +13,6 @@ export class TabsPage {
   tab3Root = 'UserSettingsPage';
 
   constructor(public splashscreen: SplashScreen) {
-    console.log(123)
-      splashscreen.hide();
+    splashscreen.hide();
   }
 }
