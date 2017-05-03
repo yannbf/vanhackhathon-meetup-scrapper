@@ -9,6 +9,6 @@ We used ionic 3, firebase 3 and angularfire2 and the Meetup API.
 
 Video: https://www.useloom.com/share/6da2bd089f1445b290b48478b7752bd4
 
-Project can be accessed at https://meetupscrapper.firebaseapp.com/
+Project can be accessed at https://meetapp.yannbraga.com/
 
 It is ideal that you access it from your phone, and it also can be added to your home page as the app is also a progressive web app!
