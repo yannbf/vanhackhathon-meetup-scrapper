@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="./banner.png" width="800px"/>
+</p>
+
 ## Meetapp - Meetup Scrapper
 This app was made in under 48 hours as a hackathon challenge for https://vanhack.com/.
 
