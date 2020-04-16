@@ -22,7 +22,7 @@ export class MemberDetailPage {
   }
 
   loadMemberInfo(memberId) {
-    this.loadingCtrl.present();
+    // this.loadingCtrl.present();
     this.meetupProvider.getMemberDetails(memberId).subscribe((memberData) => {
       this.member = memberData;
       // this.member.social = [];
@@ -37,7 +37,7 @@ export class MemberDetailPage {
       //     this.member.social.push(socialInfo);
       //   }
       // }
-      this.loadingCtrl.dismiss();
+      // this.loadingCtrl.dismiss();
     });
   }
 }

@@ -10,6 +10,8 @@ This app was built with Ionic 3 / Angular 4, Firebase 3, angularfire2 and the Me
 
 Video: https://www.useloom.com/share/6da2bd089f1445b290b48478b7752bd4
 
+Project can be accessed at https://meetupscrapper.web.app/ (UI is only optimized for mobile devices)
+
 ## How to run it
 ```sh 
   $ npm install
